@@ -1,14 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useGame } from '../hooks/use-game'
 import Bonus from '../components/bonus'
 import Yellow from '../components/yellow'
 import Blue from '../components/blue'
 import Green from '../components/green'
 import Orange from '../components/orange'
 import Purple from '../components/purple'
+import NumberPicker from '../components/common/number-picker'
 
 function Root() {
+  const { showNumberPicker, setShowNumberPicker } = useGame()
+
   return (
     <Container>
       <Bonus />
@@ -16,7 +20,13 @@ function Root() {
       <Blue />
       <Green />
       <Orange />
-      <Purple />
+      <Purple setShowNumberPicker={setShowNumberPicker} />
+      {showNumberPicker && (
+        <NumberPicker
+          close={() => setShowNumberPicker(false)}
+          fillBox={(value) => setShowNumberPicker(false)}
+        />
+      )}
     </Container>
   )
 }
@@ -35,9 +45,4 @@ const Container = styled.div`
   margin: auto;
   padding: 8px 0;
   width: calc(100vh * 9 / 16);
-
-  @media screen and (max-width: 1248px) {
-    height: calc(100vw * 16 / 9);
-    width: 100%;
-  }
 `

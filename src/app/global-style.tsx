@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components"
-import { ITheme } from "./context/theme/hook"
+import { createGlobalStyle } from 'styled-components'
+import { ITheme } from './context/theme/hook'
 
 const GlobalStyle = createGlobalStyle<{ theme: ITheme }>`
 * {
@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ITheme }>`
 
 body {
   background-color: #444444;
+  color: #ffffff;
   font-size: 16px;
   min-height: 100vh;
   margin: 0;
