@@ -23,3 +23,9 @@ export interface IBox {
   value: number
   multiplier: number
 }
+
+export enum IBonusItemStatus {
+  EMPTY = 'EMPTY',
+  READY = 'READY',
+  USED = 'USED',
+}

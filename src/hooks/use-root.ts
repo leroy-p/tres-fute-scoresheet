@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { SectionColor } from '../types/types'
+import { IBonusData, useBonus } from './use-bonus'
 
 import { ISectionData, useSection } from './use-section'
 
@@ -18,6 +19,8 @@ export interface IGameData {
   greenData: ISectionData
   orangeData: ISectionData
   purpleData: ISectionData
+  bonusData: IBonusData
+
   origin: SectionColor
 
   totalScore: number
@@ -29,6 +32,7 @@ export function useRoot() {
   const greenData = useSection(SectionColor.GREEN)
   const orangeData = useSection(SectionColor.ORANGE)
   const purpleData = useSection(SectionColor.PURPLE)
+  const bonusData = useBonus()
 
   const [isDicePickerVisible, setDicePickerVisible] = useState<boolean>(false)
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
@@ -56,12 +60,12 @@ export function useRoot() {
     setOrigin(null)
   }
 
-  function validateDicePicker(value: number, section: SectionColor | null) {
+  function validateDicePicker(value: number) {
     setDicePickerVisible(false)
 
-    if (section === SectionColor.ORANGE) {
+    if (origin === SectionColor.ORANGE) {
       orangeData.addRowBox(value)
-    } else if (section === SectionColor.PURPLE) {
+    } else if (origin === SectionColor.PURPLE) {
       purpleData.addRowBox(value)
     }
 
@@ -111,6 +115,7 @@ export function useRoot() {
     greenData,
     orangeData,
     purpleData,
+    bonusData,
     origin,
     totalScore,
   }

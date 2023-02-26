@@ -21,13 +21,12 @@ function Root() {
     greenData,
     orangeData,
     purpleData,
-    origin,
-    totalScore,
+    bonusData,
   } = useRoot()
 
   return (
     <Container>
-      <Bonus score={totalScore} />
+      <Bonus data={bonusData} />
       <Section
         data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
@@ -48,7 +47,7 @@ function Root() {
       {isDicePickerVisible && (
         <DicePicker
           close={resetDicePicker}
-          selectDiceEvent={(dice) => validateDicePicker(dice, origin)}
+          selectDiceEvent={(dice) => validateDicePicker(dice)}
           minimumDice={minimumDiceSelectable}
         />
       )}
