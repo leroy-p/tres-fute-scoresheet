@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SectionColor } from '../types/types'
 
 import { ISectionData, useSection } from './use-section'
@@ -19,6 +19,8 @@ export interface IGameData {
   orangeData: ISectionData
   purpleData: ISectionData
   origin: SectionColor
+
+  totalScore: number
 }
 
 export function useRoot() {
@@ -31,6 +33,23 @@ export function useRoot() {
   const [isDicePickerVisible, setDicePickerVisible] = useState<boolean>(false)
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
   const [origin, setOrigin] = useState<SectionColor | null>(null)
+  const [totalScore, setTotalScore] = useState<number>(0)
+
+  useEffect(() => {
+    setTotalScore(
+      yellowData.score +
+        blueData.score +
+        greenData.score +
+        orangeData.score +
+        purpleData.score
+    )
+  }, [
+    yellowData.score,
+    blueData.score,
+    greenData.score,
+    orangeData.score,
+    purpleData.score,
+  ])
 
   function resetDicePicker() {
     setDicePickerVisible(false)
@@ -93,5 +112,6 @@ export function useRoot() {
     orangeData,
     purpleData,
     origin,
+    totalScore,
   }
 }

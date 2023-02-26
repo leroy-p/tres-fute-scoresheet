@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { boxesDefault } from '../types/section-defaults'
-import { blueScores, greenScore } from '../types/section-scores'
-import { IBox, SectionColor } from '../types/types'
+import { blueScores, greenScores, yellowScores } from '../types/section-scores'
+import { BoxType, IBox, SectionColor } from '../types/types'
+import { COLUMN_COUNT, isColumnCompleted } from '../utils/grid'
 
 export interface ISectionData {
   color: SectionColor
@@ -26,15 +27,15 @@ export function useSection(color: SectionColor): ISectionData {
 
     const boxesClone = [...boxes]
     const emptyIndex = boxesClone.findIndex((b) => !b.isChecked)
-    let score = 0;
+    let score = 0
 
     boxesClone[index].isChecked = true
 
     if (color === SectionColor.BLUE) {
-      const checkedCount = boxesClone.filter((b) => b.isChecked).length
+      const checkedCount = boxesClone.filter((b) => b.isChecked && b.type !== BoxType.EMPTY).length
       score = blueScores[checkedCount - 1]
-    } else { // Yellow
-      //TODO: implement
+    } else {
+      score = getYellowScore()
     }
 
     setScore(score)
@@ -54,7 +55,7 @@ export function useSection(color: SectionColor): ISectionData {
 
     const checkedCount = boxesClone.filter((b) => b.isChecked).length
 
-    setScore(greenScore[checkedCount - 1])
+    setScore(greenScores[checkedCount - 1])
     setIsFull(emptyIndex === -1 || emptyIndex === boxesClone.length - 1)
     setBoxes(boxesClone)
   }
@@ -82,6 +83,18 @@ export function useSection(color: SectionColor): ISectionData {
 
     const lastFilledBox = [...boxes].reverse().find((b) => b.value !== 0)
     return lastFilledBox?.value || 0
+  }
+
+  function getYellowScore(): number {
+    let score = 0
+
+    for (let i = 0; i < COLUMN_COUNT; i++) {
+      if (isColumnCompleted(boxes, i)) {
+        score += yellowScores[i]
+      }
+    }
+
+    return score
   }
 
   return {

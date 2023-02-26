@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface IProps {}
+interface IProps {
+  score: number
+}
 
-function Bonus(props: IProps) {
-  return <Container></Container>
+function Bonus({ score }: IProps) {
+  return <Container>Total score: {score}</Container>
 }
 
 export default Bonus

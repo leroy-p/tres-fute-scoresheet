@@ -13,6 +13,6 @@ export default ScoreDisplayer
 
 const Container = styled.p`
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 4px;
+  right: 4px;
 `

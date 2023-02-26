@@ -10,8 +10,6 @@ interface IProps {
 const values = [1, 2, 3, 4, 5, 6];
 
 function DicePicker({ selectDiceEvent, close, minimumDice }: IProps) {
-  console.log(minimumDice);
-
   return (
     <Container onClick={close}>
       <div onClick={(event) => event.stopPropagation()}>

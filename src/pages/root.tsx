@@ -22,11 +22,12 @@ function Root() {
     orangeData,
     purpleData,
     origin,
+    totalScore,
   } = useRoot()
 
   return (
     <Container>
-      <Bonus />
+      <Bonus score={totalScore} />
       <Section
         data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
