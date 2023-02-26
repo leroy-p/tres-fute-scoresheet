@@ -6,6 +6,11 @@ export enum SectionColor {
   PURPLE = 'PURPLE',
 }
 
+export enum SectionLayout {
+  GRID = 'GRID',
+  ROW = 'ROW'
+}
+
 export enum BoxType {
   CHECK = 'CHECK',
   NUMBER = 'NUMBER',

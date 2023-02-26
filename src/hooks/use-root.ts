@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import { SectionColor } from '../types/types'
-import { IYellowData, useYellow } from './use-yellow'
-import { IBlueData, useBlue } from './use-blue'
-import { IGreenData, useGreen } from './use-green'
-import { IOrangeData, useOrange } from './use-orange'
-import { IPurpleData, usePurple } from './use-purple'
+
+import { ISectionData, useSection } from './use-section'
 
 export interface IGameData {
   isDicePickerVisible: boolean
@@ -16,20 +13,20 @@ export interface IGameData {
   addRowDice: (origin: SectionColor, index: number) => void
   addGreenDice: () => void
 
-  yellowData: IYellowData
-  blueData: IBlueData
-  greenData: IGreenData
-  orangeData: IOrangeData
-  purpleData: IPurpleData
+  yellowData: ISectionData
+  blueData: ISectionData
+  greenData: ISectionData
+  orangeData: ISectionData
+  purpleData: ISectionData
   origin: SectionColor
 }
 
 export function useRoot() {
-  const yellowData = useYellow()
-  const blueData = useBlue()
-  const greenData = useGreen()
-  const orangeData = useOrange()
-  const purpleData = usePurple()
+  const yellowData = useSection(SectionColor.YELLOW)
+  const blueData = useSection(SectionColor.BLUE)
+  const greenData = useSection(SectionColor.GREEN)
+  const orangeData = useSection(SectionColor.ORANGE)
+  const purpleData = useSection(SectionColor.PURPLE)
 
   const [isDicePickerVisible, setDicePickerVisible] = useState<boolean>(false)
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
@@ -43,15 +40,10 @@ export function useRoot() {
   function validateDicePicker(value: number, section: SectionColor | null) {
     setDicePickerVisible(false)
 
-    switch (section) {
-      case SectionColor.ORANGE:
-        orangeData.addDice(value)
-        break
-      case SectionColor.PURPLE:
-        purpleData.addDice(value)
-        break
-      default:
-        break
+    if (section === SectionColor.ORANGE) {
+      orangeData.addRowBox(value)
+    } else if (section === SectionColor.PURPLE) {
+      purpleData.addRowBox(value)
     }
 
     setOrigin(null)
@@ -64,10 +56,10 @@ export function useRoot() {
     if (origin === SectionColor.PURPLE) {
       const lastDice = purpleData.getLastDice()
 
-      isVisible = !purpleData.isFull()
+      isVisible = !purpleData.isFull
       minimum = lastDice === 6 ? 0 : lastDice
     } else if (origin === SectionColor.ORANGE) {
-      isVisible = !orangeData.isFull()
+      isVisible = !orangeData.isFull
     }
 
     setOrigin(origin)
@@ -75,17 +67,16 @@ export function useRoot() {
     setDicePickerVisible(isVisible)
   }
 
-
   function addRowDice(origin: SectionColor, index: number) {
     if (origin === SectionColor.YELLOW) {
-      yellowData.checkBox(index)
+      yellowData.checkGridBox(index)
     } else if (origin === SectionColor.BLUE) {
-      blueData.checkBox(index)
+      blueData.checkGridBox(index)
     }
   }
 
   function addGreenDice() {
-    greenData.checkBox()
+    greenData.checkRowBox()
   }
 
   return {

@@ -3,13 +3,9 @@ import styled from 'styled-components'
 
 import { useRoot } from '../hooks/use-root'
 import Bonus from '../components/bonus'
-import Blue from '../components/blue'
-import Orange from '../components/orange'
-import Purple from '../components/purple'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
-import Green from '../components/green'
-import Yellow from '../components/yellow'
+import Section from '../components/common/section'
 
 function Root() {
   const {
@@ -31,21 +27,21 @@ function Root() {
   return (
     <Container>
       <Bonus />
-      <Yellow
-        yellowData={yellowData}
+      <Section
+        data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
       />
-      <Blue
-        blueData={blueData}
+      <Section
+        data={blueData}
         clickEvent={(index) => addRowDice(SectionColor.BLUE, index)}
       />
-      <Green greenData={greenData} clickEvent={addGreenDice} />
-      <Orange
-        orangeData={orangeData}
+      <Section data={greenData} clickEvent={addGreenDice} />
+      <Section
+        data={orangeData}
         clickEvent={() => openDicePicker(SectionColor.ORANGE)}
       />
-      <Purple
-        purpleData={purpleData}
+      <Section
+        data={purpleData}
         clickEvent={() => openDicePicker(SectionColor.PURPLE)}
       />
       {isDicePickerVisible && (
