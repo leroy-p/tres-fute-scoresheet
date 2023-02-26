@@ -5,12 +5,11 @@ import { IBox } from '../../types/types'
 
 interface IProps {
   box: IBox
-  action: () => void
-  }
+}
 
-function Box({ action }: IProps)
+function Box({ box }: IProps)
 {
-  return <Container onClick={action}></Container>
+  return <Container>{box.value ? box.value : ''}</Container>
 }
 
 export default Box
@@ -19,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   background-color: #ffffff;
   border-radius: 4px;
-  cursor: pointer;
+  color: black;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;

@@ -1,3 +1,11 @@
+export enum SectionColor {
+    YELLOW = 'YELLOW',
+    BLUE = 'BLUE',
+    GREEN = 'GREEN',
+    ORANGE = 'ORANGE',
+    PURPLE = 'PURPLE',
+}
+
 export enum BoxType {
     CHECK = 'CHECK',
     NUMBER = 'NUMBER',

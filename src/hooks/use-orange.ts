@@ -1,12 +1,11 @@
 import { useState } from 'react'
-
 import { BoxType, IBox } from '../types/types'
+import { IPurpleData } from './use-purple'
 
-export interface IPurpleData {
+export interface IOrangeData {
   boxes: IBox[]
   addDice: (dice: number) => void
   isFull: () => boolean
-  getLastDice: () => number
 }
 
 const boxDefaultValue: IBox = {
@@ -29,7 +28,7 @@ const boxesDefaultValues = [
   { ...boxDefaultValue },
 ]
 
-export function usePurple(): IPurpleData {
+export function useOrange(): IOrangeData {
   const [boxes, setBoxes] = useState<IBox[]>(boxesDefaultValues)
 
   function addDice(dice: number) {
@@ -38,10 +37,9 @@ export function usePurple(): IPurpleData {
     }
 
     const _boxes = [...boxes]
-    const item = _boxes.find(b => b.value === 0)
+    const item = _boxes.find((b) => b.value === 0)
 
     if (item) {
-      console.log(item.value)
       item.value = dice
     }
 
@@ -49,14 +47,8 @@ export function usePurple(): IPurpleData {
   }
 
   function isFull() {
-    return boxes.findIndex(b => b.value === 0) === -1
+    return boxes.findIndex((b) => b.value === 0) === -1
   }
 
-  function getLastDice() {
-    const lastFilledBox = [...boxes].reverse().find(b => b.value !== 0)
-
-    return lastFilledBox?.value || 0
-  }
-
-  return { boxes, addDice, isFull, getLastDice }
+  return { boxes, addDice, isFull }
 }

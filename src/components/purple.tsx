@@ -1,20 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { usePurple } from '../hooks/use-purple'
+import { IPurpleData } from '../hooks/use-purple'
 import Box from './common/box'
 
 interface IProps {
-  setShowNumberPicker: (value: boolean) => void
+  purpleData: IPurpleData
+  clickEvent: () => void
 }
 
-function Purple({ setShowNumberPicker }: IProps) {
-  const { boxes } = usePurple()
+function Purple({ purpleData, clickEvent }: IProps) {
+  const { boxes } = purpleData
 
   return (
-    <Container>
+    <Container onClick={() => clickEvent()}>
       {boxes.map((box, index) => (
-        <Box action={() => setShowNumberPicker(true)} key={index} box={box} />
+        <Box key={index} box={box} />
       ))}
     </Container>
   )
@@ -25,6 +26,7 @@ export default Purple
 const Container = styled.div`
   align-items: center;
   border: solid 2px purple;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   height: calc(100% / 9 - 8px);

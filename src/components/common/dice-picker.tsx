@@ -2,25 +2,30 @@ import React from "react";
 import styled from "styled-components";
 
 interface IProps {
-  fillBox: (value: number) => void;
-  close: () => void;
+  selectDiceEvent: (value: number) => void
+  close: () => void
+  minimumDice: number
 }
 
 const values = [1, 2, 3, 4, 5, 6];
 
-function NumberPicker({ fillBox, close }: IProps) {
+function DicePicker({ selectDiceEvent, close, minimumDice }: IProps) {
+  console.log(minimumDice)
+
   return (
     <Container onClick={close}>
       <div onClick={(event) => event.stopPropagation()}>
         {values.map((value, index) => (
-          <Button onClick={() => fillBox(value)}>{value}</Button>
+          <Button isDisabled={minimumDice >= value} key={index} onClick={() => selectDiceEvent(value)}>
+            {value}
+          </Button>
         ))}
       </div>
     </Container>
   );
 }
 
-export default NumberPicker;
+export default DicePicker;
 
 const Container = styled.div<{ isLoading?: boolean }>`
   align-items: center;
@@ -53,12 +58,15 @@ const Container = styled.div<{ isLoading?: boolean }>`
   }
 `;
 
-const Button = styled.div`
+const Button = styled.button<{ isDisabled: boolean }>`
   align-items: center;
   background-color: #222222;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   height: 64px;
   justify-content: center;
+  opacity: ${({ isDisabled }) => isDisabled ? '0.7' : '1'};
+  pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
   width: 64px;
 `;
