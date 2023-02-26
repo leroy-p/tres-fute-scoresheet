@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SectionColor } from '../types/types'
+import { IGreenData, useGreen } from './use-green'
 import { IOrangeData, useOrange } from './use-orange'
 import { IPurpleData, usePurple } from './use-purple'
 
@@ -10,15 +11,18 @@ export interface IGameData {
   validateDicePicker: (value: number) => void
   openDicePicker: () => void
   minimumDiceSelectable: number
+  addGreenDice: () => void
 
-  purpleData: IPurpleData
+  greenData: IGreenData
   orangeData: IOrangeData
+  purpleData: IPurpleData
   origin: SectionColor
 }
 
 export function useRoot() {
-  const purpleData = usePurple()
+  const greenData = useGreen()
   const orangeData = useOrange()
+  const purpleData = usePurple()
 
   const [isDicePickerVisible, setDicePickerVisible] = useState<boolean>(false)
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
@@ -33,11 +37,11 @@ export function useRoot() {
     setDicePickerVisible(false)
 
     switch (section) {
-      case SectionColor.PURPLE:
-        purpleData.addDice(value)
-        break
       case SectionColor.ORANGE:
         orangeData.addDice(value)
+        break
+      case SectionColor.PURPLE:
+        purpleData.addDice(value)
         break
       default:
         break
@@ -64,14 +68,20 @@ export function useRoot() {
     setDicePickerVisible(isVisible)
   }
 
+  function addGreenDice() {
+    greenData.checkBox()
+  }
+
   return {
     isDicePickerVisible,
     resetDicePicker,
     validateDicePicker,
     openDicePicker,
     minimumDiceSelectable,
-    purpleData,
+    addGreenDice,
+    greenData,
     orangeData,
+    purpleData,
     origin,
   }
 }

@@ -1,20 +1,29 @@
 import React from 'react'
-import styled from 'styled-components'
+import { IGreenData } from '../hooks/use-green'
+import Box from './common/box'
+import RowSection from './common/row-section'
 
-interface IProps {}
+interface IProps {
+  greenData: IGreenData
+  clickEvent: () => void
+}
 
-function Green(props: IProps) {
-  return <Container></Container>
+function Green({ greenData, clickEvent }: IProps) {
+  const { boxes } = greenData
+
+  return (
+    <RowSection
+      clickEvent={clickEvent}
+      color="green"
+      isPointer={!greenData.isFull()}
+    >
+      <>
+        {boxes.map((box, index) => (
+          <Box key={index} box={box} multipler={box.multiplier} />
+        ))}
+      </>
+    </RowSection>
+  )
 }
 
 export default Green
-
-const Container = styled.div`
-  align-items: center;
-  border: solid 2px green;
-  display: flex;
-  flex-direction: column;
-  height: calc(100% / 9 - 8px);
-  justify-content: center;
-  width: calc(100% - 16px);
-`

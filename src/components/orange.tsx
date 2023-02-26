@@ -15,7 +15,7 @@ function Orange({ orangeData, clickEvent }: IProps) {
     <RowSection
       clickEvent={clickEvent}
       color="orange"
-      isPointer={boxes.findIndex((b) => b.value === 0) !== -1}
+      isPointer={!orangeData.isFull()}
     >
       <>
         {boxes.map((box, index) => (

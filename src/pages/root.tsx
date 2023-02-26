@@ -5,11 +5,11 @@ import { useRoot } from '../hooks/use-root'
 import Bonus from '../components/bonus'
 import Yellow from '../components/yellow'
 import Blue from '../components/blue'
-import Green from '../components/green'
 import Orange from '../components/orange'
 import Purple from '../components/purple'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
+import Green from '../components/green'
 
 function Root() {
   const {
@@ -18,9 +18,11 @@ function Root() {
     validateDicePicker,
     openDicePicker,
     minimumDiceSelectable,
-    purpleData,
+    addGreenDice,
+    greenData,
     orangeData,
-    origin
+    purpleData,
+    origin,
   } = useRoot()
 
   return (
@@ -28,7 +30,7 @@ function Root() {
       <Bonus />
       <Yellow />
       <Blue />
-      <Green />
+      <Green greenData={greenData} clickEvent={addGreenDice} />
       <Orange
         orangeData={orangeData}
         clickEvent={() => openDicePicker(SectionColor.ORANGE)}

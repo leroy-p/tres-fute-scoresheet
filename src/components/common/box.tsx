@@ -17,6 +17,7 @@ function Box({ box, multipler }: IProps) {
         </MultiplierText>
       )}
       {box.value > 0 && <ScoreText>{box.value}</ScoreText>}
+      {box.isChecked && <ScoreText>X</ScoreText>}
     </Container>
   );
 }
