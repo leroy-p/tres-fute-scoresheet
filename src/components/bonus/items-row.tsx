@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { IBonusItemStatus } from '../../types/types'
+import { BonusItemStatus } from '../../types/types'
 
 interface IProps {
-  items: IBonusItemStatus[]
+  items: BonusItemStatus[]
   isPointer: boolean
 }
 
@@ -13,8 +13,8 @@ function ItemsRow({ items, isPointer }: IProps) {
     <Container isPointer={isPointer}>
       {items.map((item, index) => (
         <Item key={index}>
-          {item === IBonusItemStatus.READY && <p>/</p>}
-          {item === IBonusItemStatus.USED && <p>X</p>}
+          {item === BonusItemStatus.READY && <p>/</p>}
+          {item === BonusItemStatus.USED && <p>X</p>}
         </Item>
       ))}
     </Container>

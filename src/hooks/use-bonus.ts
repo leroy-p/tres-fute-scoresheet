@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { IBonusItemStatus } from '../types/types'
+import { BonusItemStatus } from '../types/types'
 
 export interface IBonusData {
-  plusOneItems: IBonusItemStatus[]
-  rerollItems: IBonusItemStatus[]
+  plusOneItems: BonusItemStatus[]
+  rerollItems: BonusItemStatus[]
 
   hasPlusOneAvailable: boolean
   hasRerollAvailable: boolean
@@ -18,21 +18,21 @@ export function useBonus(): IBonusData {
   const [hasPlusOneAvailable, setHasPlusOneAvailable] = useState<boolean>(false)
   const [hasRerollAvailable, setHasRerollAvailable] = useState<boolean>(false)
 
-  const [plusOneItems, setPlusOneItems] = useState<IBonusItemStatus[]>(
-    Array(7).fill(IBonusItemStatus.EMPTY)
+  const [plusOneItems, setPlusOneItems] = useState<BonusItemStatus[]>(
+    Array(7).fill(BonusItemStatus.EMPTY)
   )
-  const [rerollItems, setRerollItems] = useState<IBonusItemStatus[]>(
-    Array(7).fill(IBonusItemStatus.EMPTY)
+  const [rerollItems, setRerollItems] = useState<BonusItemStatus[]>(
+    Array(7).fill(BonusItemStatus.EMPTY)
   )
 
   function addPlusOne() {
     const plusOneItemsClone = [...plusOneItems]
     const emptyIndex = plusOneItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.EMPTY
+      (i) => i === BonusItemStatus.EMPTY
     )
 
     if (emptyIndex !== -1) {
-      plusOneItemsClone[emptyIndex] = IBonusItemStatus.READY
+      plusOneItemsClone[emptyIndex] = BonusItemStatus.READY
     }
 
     setHasPlusOneAvailable(emptyIndex !== -1)
@@ -42,15 +42,15 @@ export function useBonus(): IBonusData {
   function usePlusOne() {
     const plusOneItemsClone = [...plusOneItems]
     const index = plusOneItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.READY
+      (i) => i === BonusItemStatus.READY
     )
 
     if (index !== -1) {
-      plusOneItemsClone[index] = IBonusItemStatus.USED
+      plusOneItemsClone[index] = BonusItemStatus.USED
     }
 
     const readyIndex = plusOneItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.READY
+      (i) => i === BonusItemStatus.READY
     )
 
     setHasPlusOneAvailable(readyIndex !== -1)
@@ -60,11 +60,11 @@ export function useBonus(): IBonusData {
   function addReroll() {
     const rerollItemsClone = [...rerollItems]
     const emptyIndex = rerollItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.EMPTY
+      (i) => i === BonusItemStatus.EMPTY
     )
 
     if (emptyIndex !== -1) {
-      rerollItemsClone[emptyIndex] = IBonusItemStatus.READY
+      rerollItemsClone[emptyIndex] = BonusItemStatus.READY
     }
 
     setHasRerollAvailable(emptyIndex !== -1)
@@ -74,15 +74,15 @@ export function useBonus(): IBonusData {
   function useReroll() {
     const rerollItemsClone = [...rerollItems]
     const index = rerollItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.READY
+      (i) => i === BonusItemStatus.READY
     )
 
     if (index !== -1) {
-      rerollItemsClone[index] = IBonusItemStatus.USED
+      rerollItemsClone[index] = BonusItemStatus.USED
     }
 
     const readyIndex = rerollItemsClone.findIndex(
-      (i) => i === IBonusItemStatus.READY
+      (i) => i === BonusItemStatus.READY
     )
 
     setHasPlusOneAvailable(readyIndex !== -1)

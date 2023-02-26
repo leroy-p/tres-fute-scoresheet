@@ -8,13 +8,26 @@ export enum SectionColor {
 
 export enum SectionLayout {
   GRID = 'GRID',
-  ROW = 'ROW'
+  ROW = 'ROW',
 }
 
 export enum BoxType {
   CHECK = 'CHECK',
   NUMBER = 'NUMBER',
-  EMPTY = 'EMPTY'
+  EMPTY = 'EMPTY',
+}
+
+export enum BonusItemStatus {
+  EMPTY = 'EMPTY',
+  READY = 'READY',
+  USED = 'USED',
+}
+
+export enum RewardType {
+  DICE = 'DICE',
+  FOX = 'FOX',
+  REROLL = 'REROLL',
+  PLUS_ONE = 'PLUS_ONE',
 }
 
 export interface IBox {
@@ -24,8 +37,8 @@ export interface IBox {
   multiplier: number
 }
 
-export enum IBonusItemStatus {
-  EMPTY = 'EMPTY',
-  READY = 'READY',
-  USED = 'USED',
+export interface IReward {
+  type: RewardType
+  color?: SectionColor
+  value?: number
 }
