@@ -1,20 +1,30 @@
 import React from 'react'
-import styled from 'styled-components'
+import { IBlueData } from '../hooks/use-blue'
+import Box from './common/box'
+import GridSection from './common/grid-section'
 
-interface IProps {}
+interface IProps {
+  blueData: IBlueData
+  clickEvent: (index: number) => void
+}
 
-function Blue(props: IProps) {
-  return <Container></Container>
+function Blue({ blueData, clickEvent }: IProps) {
+  const { boxes } = blueData
+
+  return (
+    <GridSection color="blue">
+      <>
+        {boxes.map((box, index) => (
+          <Box
+            clickEvent={() => clickEvent(index)}
+            key={index}
+            box={box}
+            multipler={box.multiplier}
+          />
+        ))}
+      </>
+    </GridSection>
+  )
 }
 
 export default Blue
-
-const Container = styled.div`
-  align-items: center;
-  border: solid 2px blue;
-  display: flex;
-  flex-direction: column;
-  height: calc(100% / 3 - 8px);
-  justify-content: center;
-  width: calc(50% - 12px);
-`

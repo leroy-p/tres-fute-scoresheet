@@ -9,7 +9,7 @@ export interface IGreenData {
 }
 
 const boxDefaultValue: IBox = {
-  type: BoxType.NUMBER,
+  type: BoxType.CHECK,
   isChecked: false,
   value: 0,
   multiplier: 1,

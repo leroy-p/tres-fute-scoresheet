@@ -9,6 +9,7 @@ export enum SectionColor {
 export enum BoxType {
   CHECK = 'CHECK',
   NUMBER = 'NUMBER',
+  EMPTY = 'EMPTY'
 }
 
 export interface IBox {

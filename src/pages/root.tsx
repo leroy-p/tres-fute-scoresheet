@@ -3,13 +3,13 @@ import styled from 'styled-components'
 
 import { useRoot } from '../hooks/use-root'
 import Bonus from '../components/bonus'
-import Yellow from '../components/yellow'
 import Blue from '../components/blue'
 import Orange from '../components/orange'
 import Purple from '../components/purple'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
 import Green from '../components/green'
+import Yellow from '../components/yellow'
 
 function Root() {
   const {
@@ -18,7 +18,10 @@ function Root() {
     validateDicePicker,
     openDicePicker,
     minimumDiceSelectable,
+    addRowDice,
     addGreenDice,
+    yellowData,
+    blueData,
     greenData,
     orangeData,
     purpleData,
@@ -28,8 +31,14 @@ function Root() {
   return (
     <Container>
       <Bonus />
-      <Yellow />
-      <Blue />
+      <Yellow
+        yellowData={yellowData}
+        clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
+      />
+      <Blue
+        blueData={blueData}
+        clickEvent={(index) => addRowDice(SectionColor.BLUE, index)}
+      />
       <Green greenData={greenData} clickEvent={addGreenDice} />
       <Orange
         orangeData={orangeData}

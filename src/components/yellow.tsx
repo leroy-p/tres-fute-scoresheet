@@ -1,20 +1,30 @@
 import React from 'react'
-import styled from 'styled-components'
+import { IYellowData } from '../hooks/use-yellow'
+import Box from './common/box'
+import GridSection from './common/grid-section'
 
-interface IProps {}
+interface IProps {
+  yellowData: IYellowData
+  clickEvent: (index: number) => void
+}
 
-function Yellow(props: IProps) {
-  return <Container></Container>
+function Yellow({ yellowData, clickEvent }: IProps) {
+  const { boxes } = yellowData
+
+  return (
+    <GridSection color="yellow">
+      <>
+        {boxes.map((box, index) => (
+          <Box
+            clickEvent={() => clickEvent(index)}
+            key={index}
+            box={box}
+            multipler={box.multiplier}
+          />
+        ))}
+      </>
+    </GridSection>
+  )
 }
 
 export default Yellow
-
-const Container = styled.div`
-  align-items: center;
-  border: solid 2px yellow;
-  display: flex;
-  flex-direction: column;
-  height: calc(100% / 3 - 8px);
-  justify-content: center;
-  width: calc(50% - 12px);
-`
