@@ -12,20 +12,21 @@ const boxDefaultValue: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
   value: 0,
+  multiplier: 1,
 }
 
 const boxesDefaultValues = [
   { ...boxDefaultValue },
   { ...boxDefaultValue },
   { ...boxDefaultValue },
+  { ...boxDefaultValue, multiplier: 2 },
   { ...boxDefaultValue },
   { ...boxDefaultValue },
+  { ...boxDefaultValue, multiplier: 2 },
   { ...boxDefaultValue },
+  { ...boxDefaultValue, multiplier: 2 },
   { ...boxDefaultValue },
-  { ...boxDefaultValue },
-  { ...boxDefaultValue },
-  { ...boxDefaultValue },
-  { ...boxDefaultValue },
+  { ...boxDefaultValue, multiplier: 3 },
 ]
 
 export function useOrange(): IOrangeData {
@@ -40,7 +41,7 @@ export function useOrange(): IOrangeData {
     const item = _boxes.find((b) => b.value === 0)
 
     if (item) {
-      item.value = dice
+      item.value = dice * item.multiplier
     }
 
     setBoxes(_boxes)

@@ -2,21 +2,25 @@ import React from "react";
 import styled from "styled-components";
 
 interface IProps {
-  selectDiceEvent: (value: number) => void
-  close: () => void
-  minimumDice: number
+  selectDiceEvent: (value: number) => void;
+  close: () => void;
+  minimumDice: number;
 }
 
 const values = [1, 2, 3, 4, 5, 6];
 
 function DicePicker({ selectDiceEvent, close, minimumDice }: IProps) {
-  console.log(minimumDice)
+  console.log(minimumDice);
 
   return (
     <Container onClick={close}>
       <div onClick={(event) => event.stopPropagation()}>
         {values.map((value, index) => (
-          <Button isDisabled={minimumDice >= value} key={index} onClick={() => selectDiceEvent(value)}>
+          <Button
+            isDisabled={minimumDice >= value}
+            key={index}
+            onClick={() => selectDiceEvent(value)}
+          >
             {value}
           </Button>
         ))}
@@ -66,7 +70,7 @@ const Button = styled.button<{ isDisabled: boolean }>`
   flex-direction: column;
   height: 64px;
   justify-content: center;
-  opacity: ${({ isDisabled }) => isDisabled ? '0.7' : '1'};
-  pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
+  opacity: ${({ isDisabled }) => (isDisabled ? "0.7" : "1")};
+  pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
   width: 64px;
 `;

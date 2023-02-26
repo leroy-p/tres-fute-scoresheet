@@ -13,6 +13,7 @@ const boxDefaultValue: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
   value: 0,
+  multiplier: 1,
 }
 
 const boxesDefaultValues = [
@@ -38,7 +39,7 @@ export function usePurple(): IPurpleData {
     }
 
     const _boxes = [...boxes]
-    const item = _boxes.find(b => b.value === 0)
+    const item = _boxes.find((b) => b.value === 0)
 
     if (item) {
       console.log(item.value)
@@ -49,11 +50,11 @@ export function usePurple(): IPurpleData {
   }
 
   function isFull() {
-    return boxes.findIndex(b => b.value === 0) === -1
+    return boxes.findIndex((b) => b.value === 0) === -1
   }
 
   function getLastDice() {
-    const lastFilledBox = [...boxes].reverse().find(b => b.value !== 0)
+    const lastFilledBox = [...boxes].reverse().find((b) => b.value !== 0)
 
     return lastFilledBox?.value || 0
   }

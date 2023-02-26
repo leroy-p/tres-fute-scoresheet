@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ITheme }>`
 body {
   background-color: #444444;
   color: #ffffff;
+  font-family: sans-serif;
   font-size: 16px;
   min-height: 100vh;
   margin: 0;
