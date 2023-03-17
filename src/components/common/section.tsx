@@ -1,28 +1,33 @@
 import React from 'react'
 import { ISectionData } from '../../hooks/use-section'
-import { SectionColor } from '../../types/types'
+import { ISectionRewards, SectionColor } from '../../types/types'
 import Box from './box'
 import GridSection from './grid-section'
 import RowSection from './row-section'
 
 interface IProps {
   data: ISectionData
+  isPurple?: boolean
+  rewards?: ISectionRewards
+  points?: number[]
   clickEvent: (index: number) => void
 }
 
-function Section({ data, clickEvent }: IProps) {
+function Section({ data, isPurple, rewards, points, clickEvent }: IProps) {
   const { boxes } = data
 
   if (data.color === SectionColor.YELLOW || data.color === SectionColor.BLUE) {
     return (
-      <GridSection color={data.color.toLowerCase()} score={data.score}>
+      <GridSection sectionColor={data.color} color={data.color.toLowerCase()} points={points} rewards={rewards} score={data.score}>
         <>
           {boxes.map((box, index) => (
             <Box
-              clickEvent={() => clickEvent(index)}
-              key={index}
+              color={data.color}
               box={box}
-              multipler={box.multiplier}
+              clickEvent={() => clickEvent(index)}
+              index={index}
+              isPurple={isPurple}
+              key={index}
             />
           ))}
         </>
@@ -44,7 +49,13 @@ function Section({ data, clickEvent }: IProps) {
       >
         <>
           {boxes.map((box, index) => (
-            <Box key={index} box={box} multipler={box.multiplier} />
+            <Box
+              box={box}
+              color={data.color}
+              index={index}
+              key={index}
+              isPurple={isPurple}
+            />
           ))}
         </>
       </RowSection>

@@ -35,10 +35,19 @@ export interface IBox {
   isChecked: boolean
   value: number
   multiplier: number
+  higherThan?: number
+  reward?: IReward
+  points?: number
 }
 
 export interface IReward {
   type: RewardType
   color?: SectionColor
   value?: number
+}
+
+export interface ISectionRewards {
+  rows: Array<{ reward?: IReward; points?: number }>
+  columns: Array<{ reward?: IReward; points?: number }>
+  diagonal?: { reward?: IReward; points?: number }
 }

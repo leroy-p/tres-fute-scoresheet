@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { IBonusData } from '../hooks/use-bonus'
+import { RewardType } from '../types/types'
 import ItemsRow from './bonus/items-row'
 
 interface IProps {
@@ -21,8 +22,8 @@ function Bonus({ data }: IProps) {
 
   return (
     <Container>
-      <ItemsRow items={rerollItems} isPointer={hasRerollAvailable} />
-      <ItemsRow items={plusOneItems} isPointer={hasPlusOneAvailable} />
+      <ItemsRow items={rerollItems} isPointer={hasRerollAvailable} type={RewardType.REROLL} />
+      <ItemsRow items={plusOneItems} isPointer={hasPlusOneAvailable} type={RewardType.PLUS_ONE} />
       <ButtonsContainer>
         <button onClick={addReroll}>add reroll</button>
         <button onClick={useReroll}>use reroll</button>

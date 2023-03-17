@@ -1,28 +1,54 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BoxType, IBox } from '../../types/types'
+import { BoxType, IBox, SectionColor } from '../../types/types'
+import Points from './points'
+import Reward from './reward'
 
 interface IProps {
   box: IBox
-  multipler: number
+  color: SectionColor
+  isPurple?: boolean
+  index: number
   clickEvent?: () => void
 }
 
-function Box({ box, multipler, clickEvent }: IProps) {
+function Box({ color, box, isPurple, index, clickEvent }: IProps) {
   return (
     <Container
       isEmpty={box.type === BoxType.EMPTY}
       onClick={clickEvent}
       isPointer={clickEvent !== undefined && !box.isChecked}
     >
-      {multipler > 1 && (
-        <MultiplierText isHidden={box.value > 0 && multipler > 1}>
-          x{multipler}
+      {box.multiplier > 1 && (
+        <MultiplierText isHidden={box.value > 0}>
+          x{box.multiplier}
         </MultiplierText>
       )}
-      {box.value > 0 && <ScoreText isHidden={box.isChecked}>{box.value}</ScoreText>}
+      {box.higherThan && (
+        <HigherThanText isHidden={box.isChecked}>
+          ≥{box.higherThan}
+        </HigherThanText>
+      )}
+      {box.value > 0 && (
+        <ScoreText isHidden={box.isChecked}>{box.value}</ScoreText>
+      )}
       {box.isChecked && <CheckedText>X</CheckedText>}
+      {isPurple && index > 0 && (
+        <PurpleDecorator>
+          <p>{'<'}</p>
+        </PurpleDecorator>
+      )}
+      {box.reward && (
+        <RewardContainer>
+          <Reward data={box.reward} />
+        </RewardContainer>
+      )}
+      {box.points && (
+        <PointsContainer>
+          <Points value={box.points} color={color} />
+        </PointsContainer>
+      )}
     </Container>
   )
 }
@@ -76,4 +102,43 @@ const MultiplierText = styled.p<{ isHidden?: boolean }>`
   color: orange;
   opacity: ${({ isHidden }) => (isHidden ? '0.7' : '1')};
   font-weight: bold;
+`
+
+const HigherThanText = styled.p<{ isHidden?: boolean }>`
+  color: green;
+  opacity: ${({ isHidden }) => (isHidden ? '0.7' : '1')};
+  font-weight: bold;
+`
+
+const PurpleDecorator = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: calc(-50% - 4px);
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  & > p {
+    color: purple;
+    font-size: 24px;
+    font-weight: bold;
+  }
+`
+
+const RewardContainer = styled.div`
+  height: 50%;
+  left: 25%;
+  position: absolute;
+  top: 90%;
+  width: 50%;
+`
+
+const PointsContainer = styled.div`
+  bottom: 90%;
+  height: 50%;
+  left: 25%;
+  position: absolute;
+  width: 50%;
 `

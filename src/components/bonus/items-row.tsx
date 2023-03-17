@@ -1,16 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BonusItemStatus } from '../../types/types'
+import { BonusItemStatus, RewardType } from '../../types/types'
+import Reward from '../common/reward'
 
 interface IProps {
   items: BonusItemStatus[]
   isPointer: boolean
+  type: RewardType
 }
 
-function ItemsRow({ items, isPointer }: IProps) {
+function ItemsRow({ items, isPointer, type }: IProps) {
   return (
     <Container isPointer={isPointer}>
+      <TypeContainer>
+        <Reward data={{ type }} />
+      </TypeContainer>
       {items.map((item, index) => (
         <Item key={index}>
           {item === BonusItemStatus.READY && <p>/</p>}
@@ -50,4 +55,13 @@ const Item = styled.div`
   & > p {
     color: black;
   }
+`
+
+const TypeContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
+  justify-content: center;
+  width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 `

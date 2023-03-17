@@ -12,7 +12,8 @@ function ScoreDisplayer({ score }: IProps) {
 export default ScoreDisplayer
 
 const Container = styled.p`
+  font-size: 12px;
   position: absolute;
-  top: 4px;
-  right: 4px;
+  right: 2px;
+  top: 2px;
 `

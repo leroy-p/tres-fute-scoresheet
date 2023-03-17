@@ -1,4 +1,4 @@
-import { BoxType, IBox, SectionColor } from './types'
+import { BoxType, IBox, IReward, ISectionRewards, RewardType, SectionColor } from './types'
 
 const yellowBoxDefault: IBox = {
   type: BoxType.CHECK,
@@ -56,17 +56,27 @@ const greenBoxDefault: IBox = {
 }
 
 const greenDefault = [
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
-  { ...greenBoxDefault },
+  { ...greenBoxDefault, higherThan: 1, points: 1 },
+  { ...greenBoxDefault, higherThan: 2, points: 3 },
+  { ...greenBoxDefault, higherThan: 3, points: 6 },
+  { ...greenBoxDefault, higherThan: 4, reward: { type: RewardType.PLUS_ONE }, points: 10 },
+  { ...greenBoxDefault, higherThan: 5, points: 15 },
+  {
+    ...greenBoxDefault,
+    higherThan: 1,
+    reward: { type: RewardType.DICE, color: SectionColor.BLUE },
+    points: 21,
+  },
+  { ...greenBoxDefault, higherThan: 2, reward: { type: RewardType.FOX }, points: 28 },
+  { ...greenBoxDefault, higherThan: 3, points: 36 },
+  {
+    ...greenBoxDefault,
+    higherThan: 4,
+    reward: { type: RewardType.DICE, color: SectionColor.PURPLE, value: 6 },
+    points: 45,
+  },
+  { ...greenBoxDefault, higherThan: 5, reward: { type: RewardType.REROLL }, points: 55 },
+  { ...greenBoxDefault, higherThan: 6, points: 66 },
 ]
 
 const orangeBoxDefault: IBox = {
@@ -79,14 +89,20 @@ const orangeBoxDefault: IBox = {
 const orangeDefault = [
   { ...orangeBoxDefault },
   { ...orangeBoxDefault },
-  { ...orangeBoxDefault },
+  { ...orangeBoxDefault, reward: { type: RewardType.REROLL } },
   { ...orangeBoxDefault, multiplier: 2 },
-  { ...orangeBoxDefault },
-  { ...orangeBoxDefault },
+  {
+    ...orangeBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.YELLOW },
+  },
+  { ...orangeBoxDefault, reward: { type: RewardType.PLUS_ONE } },
   { ...orangeBoxDefault, multiplier: 2 },
-  { ...orangeBoxDefault },
+  { ...orangeBoxDefault, reward: { type: RewardType.FOX } },
   { ...orangeBoxDefault, multiplier: 2 },
-  { ...orangeBoxDefault },
+  {
+    ...orangeBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.PURPLE, value: 6 },
+  },
   { ...orangeBoxDefault, multiplier: 3 },
 ]
 
@@ -100,15 +116,27 @@ const purpleBoxDefault: IBox = {
 const purpleDefault = [
   { ...purpleBoxDefault },
   { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
-  { ...purpleBoxDefault },
+  { ...purpleBoxDefault, reward: { type: RewardType.REROLL } },
+  {
+    ...purpleBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.BLUE },
+  },
+  { ...purpleBoxDefault, reward: { type: RewardType.PLUS_ONE } },
+  {
+    ...purpleBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.YELLOW },
+  },
+  { ...purpleBoxDefault, reward: { type: RewardType.FOX } },
+  { ...purpleBoxDefault, reward: { type: RewardType.REROLL } },
+  {
+    ...purpleBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.GREEN },
+  },
+  {
+    ...purpleBoxDefault,
+    reward: { type: RewardType.DICE, color: SectionColor.ORANGE, value: 6 },
+  },
+  { ...purpleBoxDefault, reward: { type: RewardType.PLUS_ONE } },
 ]
 
 export const boxesDefault: { [key: string]: IBox[] } = {
@@ -118,3 +146,35 @@ export const boxesDefault: { [key: string]: IBox[] } = {
   [SectionColor.ORANGE]: orangeDefault,
   [SectionColor.PURPLE]: purpleDefault,
 }
+
+export const yellowRewards: ISectionRewards = {
+  rows: [
+    { reward: { type: RewardType.DICE, color: SectionColor.BLUE } },
+    { reward: { type: RewardType.DICE, color: SectionColor.ORANGE, value: 4 } },
+    { reward: { type: RewardType.DICE, color: SectionColor.GREEN } },
+    { reward: { type: RewardType.FOX } },
+  ],
+  columns: [
+    { points: 10 },
+    { points: 14 },
+    { points: 16 },
+    { points: 20 },
+  ],
+  diagonal: { reward: { type: RewardType.PLUS_ONE } },
+}
+
+export const blueRewards: ISectionRewards = {
+  rows: [
+    { reward: { type: RewardType.DICE, color: SectionColor.ORANGE, value: 5 } },
+    { reward: { type: RewardType.DICE, color: SectionColor.YELLOW } },
+    { reward: { type: RewardType.FOX } },
+  ],
+  columns: [
+    { reward: { type: RewardType.REROLL } },
+    { reward: { type: RewardType.DICE, color: SectionColor.GREEN } },
+    { reward: { type: RewardType.DICE, color: SectionColor.PURPLE, value: 6 } },
+    { reward: { type: RewardType.PLUS_ONE } },
+  ],
+}
+
+export const bluePoints = [1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56]

@@ -6,6 +6,7 @@ import Bonus from '../components/bonus'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
 import Section from '../components/common/section'
+import { bluePoints, blueRewards, yellowRewards } from '../types/section-defaults'
 
 function Root() {
   const {
@@ -30,10 +31,13 @@ function Root() {
       <Section
         data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
+        rewards={yellowRewards}
       />
       <Section
         data={blueData}
         clickEvent={(index) => addRowDice(SectionColor.BLUE, index)}
+        rewards={blueRewards}
+        points={bluePoints}
       />
       <Section data={greenData} clickEvent={addGreenDice} />
       <Section
@@ -41,6 +45,7 @@ function Root() {
         clickEvent={() => openDicePicker(SectionColor.ORANGE)}
       />
       <Section
+        isPurple
         data={purpleData}
         clickEvent={() => openDicePicker(SectionColor.PURPLE)}
       />
@@ -58,7 +63,7 @@ function Root() {
 export default Root
 
 const Container = styled.div`
-  align-items: flex-start;
+  align-items: center;
   background-color: #222222;
   display: flex;
   flex-direction: row;
