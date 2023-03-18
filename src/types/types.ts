@@ -4,6 +4,7 @@ export enum SectionColor {
   GREEN = 'GREEN',
   ORANGE = 'ORANGE',
   PURPLE = 'PURPLE',
+  WHITE = 'WHITE',
 }
 
 export enum SectionLayout {

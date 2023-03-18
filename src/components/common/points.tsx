@@ -28,6 +28,7 @@ const Container = styled.div<{ color?: SectionColor }>`
     if (color === SectionColor.GREEN) return 'green'
     if (color === SectionColor.ORANGE) return 'orange'
     if (color === SectionColor.PURPLE) return 'purple'
+    if (color === SectionColor.WHITE) return 'white'
 
     return '#000000';
   }};
@@ -38,7 +39,8 @@ const Container = styled.div<{ color?: SectionColor }>`
   width: 100%;
 
   & > p {
-    color: ${({ color  }) => color === SectionColor.YELLOW ? '#000000' : '#ffffff'};
-    font-size: 12px;
+    color: ${({ color }) => color === SectionColor.YELLOW || color === SectionColor.WHITE ? '#000000' : '#ffffff'};
+    font-size: 24px;
+    font-weight: bold;
   }
 `
