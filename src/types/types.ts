@@ -35,6 +35,7 @@ export enum RewardType {
 export interface IBox {
   type: BoxType
   isChecked: boolean
+  isCheckedByDefault: boolean,
   value: number
   multiplier: number
   higherThan?: number

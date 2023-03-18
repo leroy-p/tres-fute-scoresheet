@@ -64,7 +64,11 @@ const Button = styled.button<{ isDisabled: boolean }>`
   flex-direction: column;
   height: 64px;
   justify-content: center;
-  opacity: ${({ isDisabled }) => (isDisabled ? "0.7" : "1")};
+  opacity: ${({ isDisabled }) => (isDisabled ? "0.5" : "1")};
   pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
   width: 64px;
+
+  :hover {
+    opacity: ${({ isDisabled }) => (isDisabled ? "0.5" : "0.7")};
+  }
 `;

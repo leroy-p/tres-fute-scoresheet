@@ -17,9 +17,7 @@ function Dices() {
 
   return (
     <Container>
-      <p>{currentMode}</p>
       <SelectedDicesContainer>
-        <p>Selected dices: </p>
         {selectedDices &&
           selectedDices.map((selectedDice) => (
             <Dice
@@ -45,7 +43,6 @@ function Dices() {
           ))}
       </AvailableDicesContainer>
       <ThrowedDicesContainer>
-        <p>Throwed dices: </p>
         {throwedDices &&
           throwedDices.map((throwedDice) => (
             <Dice
@@ -80,7 +77,13 @@ const Container = styled.div`
   justify-content: center;
   gap: 8px;
   margin: auto;
+  padding: 24px;
   width: calc(100vh * 9 / 16);
+
+  @media (orientation: portrait) {
+    height: 100vh;
+    width: 100vw;
+  }
 `
 
 const SelectedDicesContainer = styled.div`
@@ -97,10 +100,20 @@ const AvailableDicesContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   height: 30%;
   justify-content: center;
   gap: 16px;
   width: 100%;
+
+  & > div {
+    height: calc((100vh * 9 / 16) / 4.5);
+    width: calc((100vh * 9 / 16) / 4.5);
+
+    & > p {
+      font-size: calc((100vh * 9 / 16) / 8);
+    }
+  }
 `
 
 const ThrowedDicesContainer = styled.div`
@@ -124,11 +137,16 @@ const ActionsContainer = styled.div`
 `
 
 const Button = styled.button`
-  border: solid 1px #ffffff;
+  background-color: #444444;
+  border: solid 2px #ffffff;
   color: #ffffff;
   height: 100%;
   padding: 0 8px;
   height: 48px;
   text-transform: uppercase;
   width: 200px;
+
+  :hover {
+    opacity: 0.7;
+  }
 `

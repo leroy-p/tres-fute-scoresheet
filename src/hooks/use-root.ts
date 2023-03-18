@@ -18,6 +18,22 @@ export function useRoot() {
   const [totalScore, setTotalScore] = useState<number>(0)
   const [rerollCount, setRerollCount] = useState<number>(0)
   const [plusOneCount, setPlusOneCount] = useState<number>(0)
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+
+  function reset() {
+    yellowData.reset()
+    blueData.reset()
+    greenData.reset()
+    orangeData.reset()
+    purpleData.reset()
+    bonusData.reset()
+    setDicePickerVisible(false)
+    setMinimumDiceSelectable(0)
+    setOrigin(null)
+    setTotalScore(0)
+    setRerollCount(0)
+    setPlusOneCount(9)
+  }
 
   useEffect(() => {
     const foxCount =
@@ -157,12 +173,7 @@ export function useRoot() {
 
   return {
     isDicePickerVisible,
-    resetDicePicker,
-    validateDicePicker,
-    openDicePicker,
     minimumDiceSelectable,
-    addRowDice,
-    addGreenDice,
     yellowData,
     blueData,
     greenData,
@@ -171,5 +182,13 @@ export function useRoot() {
     bonusData,
     origin,
     totalScore,
+    isMenuOpen,
+    resetDicePicker,
+    validateDicePicker,
+    openDicePicker,
+    addRowDice,
+    addGreenDice,
+    setIsMenuOpen,
+    reset,
   }
 }

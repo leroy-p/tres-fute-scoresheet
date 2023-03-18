@@ -51,9 +51,14 @@ const Container = styled.div<{ isPointer: boolean }>`
   }
 
   & > button {
+    background-color: #444444;
     color: #ffffff;
     border: solid 1px #ffffff;
     padding: 8px;
+
+    :hover {
+      opacity: 0.7;
+    }
   }
 `
 
@@ -70,13 +75,18 @@ const Item = styled.div`
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 
   @media (orientation: portrait) {
-    font-size: calc(((100vw - 16px) / 11 - 8px) / 2);
     height: calc((100vw - 16px) / 11 - 8px);
     width: calc((100vw - 16px) / 11 - 8px);
+
+    & > p {
+      font-size: calc(((100vw - 16px) / 11 - 8px));
+    }
   }
 
   & > p {
+    font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px));
     color: black;
+    font-weight: bold;
   }
 `
 

@@ -4,7 +4,6 @@ import { BonusItemStatus } from '../types/types'
 export function useBonus() {
   const [hasPlusOneAvailable, setHasPlusOneAvailable] = useState<boolean>(false)
   const [hasRerollAvailable, setHasRerollAvailable] = useState<boolean>(false)
-
   const [plusOneItems, setPlusOneItems] = useState<BonusItemStatus[]>(
     Array(7).fill(BonusItemStatus.EMPTY)
   )
@@ -76,6 +75,14 @@ export function useBonus() {
     setRerollItems(rerollItemsClone)
   }
 
+  function reset() {
+    setHasPlusOneAvailable(false)
+    setHasRerollAvailable(false)
+    setPlusOneItems(Array(7).fill(BonusItemStatus.EMPTY))
+    setRerollItems(Array(7).fill(BonusItemStatus.EMPTY))
+  }
+
+
   return {
     plusOneItems,
     rerollItems,
@@ -85,5 +92,6 @@ export function useBonus() {
     useReroll,
     hasPlusOneAvailable,
     hasRerollAvailable,
+    reset,
   }
 }

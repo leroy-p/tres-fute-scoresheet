@@ -47,5 +47,6 @@ const Container = styled.div<{ color: SectionColor; isCursor: boolean }>`
 
   & > p {
     color: ${({ color }) => color === SectionColor.YELLOW || color === SectionColor.WHITE ? '#000000' : '#ffffff'};
+    font-weight: bold;
   }
 `

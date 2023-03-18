@@ -32,7 +32,7 @@ const Container = styled.div<{ isChecked: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
   padding: 8px;
   pointer-events: ${({ isChecked }) => (isChecked ? 'none' : 'auto')};
 `
@@ -61,17 +61,17 @@ const BoxContainer = styled.div`
 const RewardContainer = styled.div`
   align-items: center;
   display: flex;
-  height: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
+  height: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 2);
   justify-content: center;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 
   @media (orientation: portrait) {
-    height: calc((100vw - 16px) / 11 - 8px);
+    height: calc(((100vw - 16px) / 11 - 8px) / 2);
     width: calc((100vw - 16px) / 11 - 8px);
   }
 
   & > div {
-    height: 50%;
+    height: 100%;
     width: 50%;
 
     & > p {

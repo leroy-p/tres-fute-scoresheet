@@ -22,6 +22,7 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  font-weight: bold;
   outline:none;
 }
 

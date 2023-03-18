@@ -10,9 +10,10 @@ import { rounds } from '../types/section-defaults'
 interface IProps {
   data: ReturnType<typeof useBonus>
   score: number
+  setIsMenuOpen: (value: boolean) => void
 }
 
-function Bonus({ data, score }: IProps) {
+function Bonus({ data, score, setIsMenuOpen }: IProps) {
   const {
     plusOneItems,
     rerollItems,
@@ -26,9 +27,24 @@ function Bonus({ data, score }: IProps) {
 
   return (
     <Container>
-      <Rounds addPlusOne={addPlusOne} addReroll={addReroll} rounds={rounds} />
-      <ItemsRow items={rerollItems} isPointer={hasRerollAvailable} type={RewardType.REROLL} useAction={useReroll} />
-      <ItemsRow items={plusOneItems} isPointer={hasPlusOneAvailable} type={RewardType.PLUS_ONE} useAction={usePlusOne} />
+      <Rounds
+        addPlusOne={addPlusOne}
+        addReroll={addReroll}
+        rounds={rounds}
+        setIsMenuOpen={setIsMenuOpen}
+      />
+      <ItemsRow
+        items={rerollItems}
+        isPointer={hasRerollAvailable}
+        type={RewardType.REROLL}
+        useAction={useReroll}
+      />
+      <ItemsRow
+        items={plusOneItems}
+        isPointer={hasPlusOneAvailable}
+        type={RewardType.PLUS_ONE}
+        useAction={usePlusOne}
+      />
       <ScoreDisplayer>Total score: {score}</ScoreDisplayer>
     </Container>
   )
@@ -43,7 +59,7 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(100% / 3 - 8px);
   justify-content: center;
-  gap: 8px;
+  gap: 16px;
   padding: 8px;
   position: relative;
   width: calc(100% - 16px);

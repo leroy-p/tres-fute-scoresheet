@@ -3,6 +3,7 @@ import { BoxType, IBox, IReward, IRound, ISectionRewards, RewardType, SectionCol
 const yellowBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
+  isCheckedByDefault: false,
   value: 0,
   multiplier: 1,
 }
@@ -11,16 +12,16 @@ const yellowDefault = [
   { ...yellowBoxDefault, value: 3 },
   { ...yellowBoxDefault, value: 6 },
   { ...yellowBoxDefault, value: 5 },
-  { ...yellowBoxDefault, value: 0, isChecked: true },
+  { ...yellowBoxDefault, value: 0, isChecked: true, isCheckedByDefault: true },
   { ...yellowBoxDefault, value: 2 },
   { ...yellowBoxDefault, value: 1 },
-  { ...yellowBoxDefault, value: 0, isChecked: true },
+  { ...yellowBoxDefault, value: 0, isChecked: true, isCheckedByDefault: true },
   { ...yellowBoxDefault, value: 5 },
   { ...yellowBoxDefault, value: 1 },
-  { ...yellowBoxDefault, value: 0, isChecked: true },
+  { ...yellowBoxDefault, value: 0, isChecked: true, isCheckedByDefault: true },
   { ...yellowBoxDefault, value: 2 },
   { ...yellowBoxDefault, value: 4 },
-  { ...yellowBoxDefault, value: 0, isChecked: true },
+  { ...yellowBoxDefault, value: 0, isChecked: true, isCheckedByDefault: true },
   { ...yellowBoxDefault, value: 3 },
   { ...yellowBoxDefault, value: 4 },
   { ...yellowBoxDefault, value: 6 },
@@ -29,6 +30,7 @@ const yellowDefault = [
 const blueBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
+  isCheckedByDefault: false,
   value: 0,
   multiplier: 1,
 }
@@ -51,6 +53,7 @@ const blueDefault = [
 const greenBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
+  isCheckedByDefault: false,
   value: 0,
   multiplier: 1,
 }
@@ -82,6 +85,7 @@ const greenDefault = [
 const orangeBoxDefault: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
+  isCheckedByDefault: false,
   value: 0,
   multiplier: 1,
 }
@@ -109,6 +113,7 @@ const orangeDefault = [
 const purpleBoxDefault: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
+  isCheckedByDefault: false,
   value: 0,
   multiplier: 1,
 }

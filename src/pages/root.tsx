@@ -1,26 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import Div100vh from 'react-div-100vh'
 
 import { useRoot } from '../hooks/use-root'
 import Bonus from '../components/bonus'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
 import Section from '../components/common/section'
-import {
-  blueRewards,
-  yellowRewards,
-} from '../types/section-defaults'
+import { blueRewards, yellowRewards } from '../types/section-defaults'
 import { blueScores } from '../types/section-scores'
+import Menu from '../components/menu'
 
 function Root() {
   const {
     isDicePickerVisible,
-    resetDicePicker,
-    validateDicePicker,
-    openDicePicker,
     minimumDiceSelectable,
-    addRowDice,
-    addGreenDice,
     yellowData,
     blueData,
     greenData,
@@ -28,11 +22,23 @@ function Root() {
     purpleData,
     bonusData,
     totalScore,
+    isMenuOpen,
+    resetDicePicker,
+    validateDicePicker,
+    openDicePicker,
+    addRowDice,
+    addGreenDice,
+    setIsMenuOpen,
+    reset,
   } = useRoot()
 
   return (
     <Container>
-      <Bonus data={bonusData} score={totalScore} />
+      <Bonus
+        data={bonusData}
+        score={totalScore}
+        setIsMenuOpen={setIsMenuOpen}
+      />
       <Section
         data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
@@ -61,19 +67,19 @@ function Root() {
           minimumDice={minimumDiceSelectable}
         />
       )}
+      {isMenuOpen && <Menu close={() => setIsMenuOpen(false)} reset={reset} />}
     </Container>
   )
 }
 
 export default Root
 
-const Container = styled.div`
+const Container = styled(Div100vh)`
   align-items: center;
   background-color: #222222;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  height: 100vh;
   justify-content: center;
   gap: 8px;
   margin: auto;
@@ -81,7 +87,6 @@ const Container = styled.div`
   width: calc(100vh * 9 / 16);
 
   @media (orientation: portrait) {
-    height: 100vh;
     width: 100vw;
   }
 `
