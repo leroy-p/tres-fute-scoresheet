@@ -141,8 +141,21 @@ const RewardContainer = styled.div`
   justify-content: center;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 
+  @media (orientation: portrait) {
+    height: calc((100vw - 16px) / 11 - 8px);
+    width: calc((100vw - 16px) / 11 - 8px);
+  }
+
   & > div {
     height: 50%;
     width: 50%;
+
+    & > p {
+      font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
+
+      @media (orientation: portrait) {
+        font-size: calc(((100vw - 16px) / 11 - 8px) / 3);
+      }
+    }
   }
 `

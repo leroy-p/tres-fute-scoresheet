@@ -1,12 +1,12 @@
 import React from 'react'
-import { ISectionData } from '../../hooks/use-section'
+import { useSection } from '../../hooks/use-section'
 import { ISectionRewards, SectionColor } from '../../types/types'
 import Box from './box'
 import GridSection from './grid-section'
 import RowSection from './row-section'
 
 interface IProps {
-  data: ISectionData
+  data: ReturnType<typeof useSection>
   isPurple?: boolean
   rewards?: ISectionRewards
   points?: number[]

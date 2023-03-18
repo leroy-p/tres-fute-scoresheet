@@ -39,7 +39,8 @@ const ItemContainer = styled.div<{ color: SectionColor; itemsCount: number }>`
   flex-direction: column;
   justify-content: center;
   gap: 4px;
-  width: ${({ itemsCount }) => itemsCount > 0 ? `calc(100vw / ${2 * itemsCount})` : '0'};
+  width: ${({ itemsCount }) =>
+    itemsCount > 0 ? `calc(100vw / ${2 * itemsCount})` : '0'};
 
   & > p {
     color: ${({ color }) => {
@@ -58,10 +59,32 @@ const ItemContainer = styled.div<{ color: SectionColor; itemsCount: number }>`
           return '#000000'
       }
     }};
+    font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
+
+    @media (orientation: portrait) {
+      font-size: calc(((100vw - 16px) / 11 - 8px) / 3);
+    }
   }
 `
 
 const PointContainer = styled.div<{ itemsCount: number }>`
-  height: ${({ itemsCount }) => itemsCount > 0 ? `calc((100vh - 48px) * 9 / ${16 * 2 * itemsCount})` : '0'};
-  width: ${({ itemsCount }) => itemsCount > 0 ? `calc((100vh - 48px) * 9 / ${16 * 2 * itemsCount})` : '0'};
+  height: ${({ itemsCount }) =>
+    itemsCount > 0 ? `calc((100vh - 48px) * 9 / ${16 * 2 * itemsCount})` : '0'};
+  width: ${({ itemsCount }) =>
+    itemsCount > 0 ? `calc((100vh - 48px) * 9 / ${16 * 2 * itemsCount})` : '0'};
+
+  & > div > p {
+    font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
+
+    @media (orientation: portrait) {
+      font-size: calc(((100vw - 16px) / 11 - 8px) / 3);
+    }
+  }
+
+  @media (orientation: portrait) {
+    height: ${({ itemsCount }) =>
+      itemsCount > 0 ? `calc((100vw - 48px) / ${2 * itemsCount})` : '0'};
+    width: ${({ itemsCount }) =>
+      itemsCount > 0 ? `calc((100vw - 48px) / ${2 * itemsCount})` : '0'};
+  }
 `

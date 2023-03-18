@@ -1,6 +1,8 @@
 import { IBox } from '../types/types'
 
 export const COLUMN_COUNT = 4
+export const YELLOW_ROW_COUNT = 4
+export const BLUE_ROW_COUNT = 3
 
 export function isColumnCompleted(boxes: IBox[], index: number): boolean {
   for (let i = index; i < boxes.length; i += COLUMN_COUNT) {
@@ -19,9 +21,12 @@ export function isRowCompleted(boxes: IBox[], index: number): boolean {
     if (i >= boxes.length) break
 
     if (!boxes[i].isChecked) {
+      console.log('false')
+
       return false
     }
   }
 
+  console.log('true')
   return true
 }

@@ -176,5 +176,3 @@ export const blueRewards: ISectionRewards = {
     { reward: { type: RewardType.PLUS_ONE } },
   ],
 }
-
-export const bluePoints = [1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56]

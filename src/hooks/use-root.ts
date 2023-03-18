@@ -1,30 +1,8 @@
 import { useEffect, useState } from 'react'
 import { SectionColor } from '../types/types'
-import { IBonusData, useBonus } from './use-bonus'
+import { useBonus } from './use-bonus'
 
-import { ISectionData, useSection } from './use-section'
-
-export interface IGameData {
-  isDicePickerVisible: boolean
-
-  resetDicePicker: () => void
-  validateDicePicker: (value: number) => void
-  openDicePicker: () => void
-  minimumDiceSelectable: number
-  addRowDice: (origin: SectionColor, index: number) => void
-  addGreenDice: () => void
-
-  yellowData: ISectionData
-  blueData: ISectionData
-  greenData: ISectionData
-  orangeData: ISectionData
-  purpleData: ISectionData
-  bonusData: IBonusData
-
-  origin: SectionColor
-
-  totalScore: number
-}
+import { useSection } from './use-section'
 
 export function useRoot() {
   const yellowData = useSection(SectionColor.YELLOW)
@@ -40,12 +18,29 @@ export function useRoot() {
   const [totalScore, setTotalScore] = useState<number>(0)
 
   useEffect(() => {
+    const foxCount =
+      yellowData.foxCount +
+      blueData.foxCount +
+      greenData.foxCount +
+      orangeData.foxCount +
+      purpleData.foxCount
+    const foxScore =
+      Math.min(
+        yellowData.score,
+        blueData.score,
+        greenData.score,
+        orangeData.score,
+        yellowData.score,
+        purpleData.score
+      ) * foxCount
+
     setTotalScore(
       yellowData.score +
         blueData.score +
         greenData.score +
         orangeData.score +
-        purpleData.score
+        purpleData.score +
+        foxScore
     )
   }, [
     yellowData.score,
@@ -53,6 +48,11 @@ export function useRoot() {
     greenData.score,
     orangeData.score,
     purpleData.score,
+    yellowData.foxCount,
+    blueData.foxCount,
+    greenData.foxCount,
+    orangeData.foxCount,
+    purpleData.foxCount,
   ])
 
   function resetDicePicker() {

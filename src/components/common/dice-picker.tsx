@@ -53,10 +53,6 @@ const Container = styled.div<{ isLoading?: boolean }>`
     gap: 16px;
     padding: 24px;
     width: 300px;
-
-    @media screen and (max-width: 588px) {
-      width: calc(100% - 48px);
-    }
   }
 `;
 

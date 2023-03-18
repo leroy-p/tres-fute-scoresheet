@@ -1,20 +1,7 @@
 import { useState } from 'react'
 import { BonusItemStatus } from '../types/types'
 
-export interface IBonusData {
-  plusOneItems: BonusItemStatus[]
-  rerollItems: BonusItemStatus[]
-
-  hasPlusOneAvailable: boolean
-  hasRerollAvailable: boolean
-
-  addPlusOne: () => void
-  usePlusOne: () => void
-  addReroll: () => void
-  useReroll: () => void
-}
-
-export function useBonus(): IBonusData {
+export function useBonus() {
   const [hasPlusOneAvailable, setHasPlusOneAvailable] = useState<boolean>(false)
   const [hasRerollAvailable, setHasRerollAvailable] = useState<boolean>(false)
 

@@ -71,6 +71,12 @@ const Container = styled.div<{ isEmpty: boolean; isPointer: boolean }>`
   pointer-events: ${({ isEmpty }) => (isEmpty ? 'none' : 'auto')};
   position: relative;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
+
+  @media (orientation: portrait) {
+    font-size: calc(((100vw - 16px) / 11 - 8px) / 2);
+    height: calc((100vw - 16px) / 11 - 8px);
+    width: calc((100vw - 16px) / 11 - 8px);
+  }
 `
 
 const ScoreText = styled.p<{ isHidden?: boolean }>`
@@ -133,6 +139,14 @@ const RewardContainer = styled.div`
   position: absolute;
   top: 90%;
   width: 50%;
+
+  & > div > p {
+    font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
+
+    @media (orientation: portrait) {
+      font-size: calc(((100vw - 16px) / 11 - 8px) / 3);
+    }
+  }
 `
 
 const PointsContainer = styled.div`
@@ -141,4 +155,12 @@ const PointsContainer = styled.div`
   left: 25%;
   position: absolute;
   width: 50%;
+
+  & > div > p {
+    font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
+
+    @media (orientation: portrait) {
+      font-size: calc(((100vw - 16px) / 11 - 8px) / 3);
+    }
+  }
 `

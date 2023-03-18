@@ -9,8 +9,8 @@ export enum TurnMode {
 }
 
 interface IDice {
-    value: number
-    color: SectionColor
+  value: number
+  color: SectionColor
 }
 
 export function useDices() {
@@ -30,7 +30,7 @@ export function useDices() {
     const dices = [...availableDices]
 
     for (const dice of dices) {
-        dice.value = Math.floor(Math.random() * 6 + 1)
+      dice.value = Math.floor(Math.random() * 6 + 1)
     }
 
     setAvailableDices(dices)
@@ -46,12 +46,16 @@ export function useDices() {
     const selectedDicesClone = [...selectedDices]
     const throwedDicesClone = [...throwedDices]
 
-    for (let i = 0 ; i < availableDices.length; i++) {
-        if  (i !== diceIndex && (availableDices[i].value < dice.value || selectedDicesClone.length === 2)) {
-            throwedDicesClone.push({ ...availableDices[i] })
-        } else if (i !== diceIndex) {
-            availableDicesClone.push({ ...availableDices[i] })
-        }
+    for (let i = 0; i < availableDices.length; i++) {
+      if (
+        i !== diceIndex &&
+        (availableDices[i].value < dice.value ||
+          selectedDicesClone.length === 2)
+      ) {
+        throwedDicesClone.push({ ...availableDices[i] })
+      } else if (i !== diceIndex) {
+        availableDicesClone.push({ ...availableDices[i] })
+      }
     }
 
     selectedDicesClone.push({ ...dice })
@@ -59,7 +63,9 @@ export function useDices() {
     setAvailableDices(availableDicesClone)
     setSelectedDices(selectedDicesClone)
     setThrowedDices(throwedDicesClone)
-    setCurrentMode(availableDicesClone.length === 0 ? TurnMode.END : TurnMode.THROW)
+    setCurrentMode(
+      availableDicesClone.length === 0 ? TurnMode.END : TurnMode.THROW
+    )
   }
 
   function resetDices() {
@@ -76,5 +82,13 @@ export function useDices() {
     setCurrentMode(TurnMode.START)
   }
 
-  return { availableDices, selectedDices, throwedDices, currentMode, throwDices, pickDice, resetDices }
+  return {
+    availableDices,
+    selectedDices,
+    throwedDices,
+    currentMode,
+    throwDices,
+    pickDice,
+    resetDices,
+  }
 }

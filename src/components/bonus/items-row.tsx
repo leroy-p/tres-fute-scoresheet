@@ -52,6 +52,12 @@ const Item = styled.div`
   justify-content: center;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 
+  @media (orientation: portrait) {
+    font-size: calc(((100vw - 16px) / 11 - 8px) / 2);
+    height: calc((100vw - 16px) / 11 - 8px);
+    width: calc((100vw - 16px) / 11 - 8px);
+  }
+
   & > p {
     color: black;
   }
@@ -64,4 +70,10 @@ const TypeContainer = styled.div`
   height: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
   justify-content: center;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
+
+  @media (orientation: portrait) {
+    height: calc((100vw - 16px) / 11 - 8px);
+    width: calc((100vw - 16px) / 11 - 8px);
+  }
+
 `

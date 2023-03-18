@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IBonusData } from '../hooks/use-bonus'
+import { useBonus } from '../hooks/use-bonus'
 import { RewardType } from '../types/types'
 import ItemsRow from './bonus/items-row'
 
 interface IProps {
-  data: IBonusData
+  data: ReturnType<typeof useBonus>
+  score: number
 }
 
-function Bonus({ data }: IProps) {
+function Bonus({ data, score }: IProps) {
   const {
     plusOneItems,
     rerollItems,
@@ -32,6 +33,7 @@ function Bonus({ data }: IProps) {
         <button onClick={addPlusOne}>add +1</button>
         <button onClick={usePlusOne}>use +1</button>
       </ButtonsContainer>
+      <ScoreDisplayer>Total score: {score}</ScoreDisplayer>
     </Container>
   )
 }
@@ -47,6 +49,7 @@ const Container = styled.div`
   justify-content: center;
   gap: 16px;
   padding: 8px;
+  position: relative;
   width: calc(100% - 16px);
 `
 
@@ -63,4 +66,11 @@ const ButtonsContainer = styled.div`
     border: solid 1px #ffffff;
     padding: 8px;
   }
+`
+
+const ScoreDisplayer = styled.p`
+  bottom: 2px;
+  font-size: 12px;
+  position: absolute;
+  right: 2px;
 `

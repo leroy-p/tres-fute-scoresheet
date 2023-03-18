@@ -40,7 +40,6 @@ const Container = styled.div<{ color?: SectionColor }>`
 
   & > p {
     color: ${({ color }) => color === SectionColor.YELLOW || color === SectionColor.WHITE ? '#000000' : '#ffffff'};
-    font-size: 24px;
     font-weight: bold;
   }
 `
