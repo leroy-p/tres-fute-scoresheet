@@ -10,6 +10,7 @@ import {
   BLUE_ROW_COUNT,
   COLUMN_COUNT,
   isColumnCompleted,
+  isDiagonalCompleted,
   isRowCompleted,
   YELLOW_ROW_COUNT,
 } from '../utils/grid'
@@ -77,6 +78,16 @@ export function useSection(color: SectionColor) {
     setScore(greenScores[checkedCount - 1])
     setIsFull(emptyIndex === -1 || emptyIndex === boxesClone.length - 1)
     setBoxes(boxesClone)
+    setRerollCount(
+      boxesClone[emptyIndex].reward?.type === RewardType.REROLL
+        ? (value) => value + 1
+        : rerollCount
+    )
+    setplusOneCount(
+      boxesClone[emptyIndex].reward?.type === RewardType.PLUS_ONE
+        ? (value) => value + 1
+        : plusOneCount
+    )
     setFoxCount(
       boxesClone[emptyIndex].reward?.type === RewardType.FOX
         ? (value) => value + 1
@@ -100,6 +111,16 @@ export function useSection(color: SectionColor) {
     setScore(score)
     setIsFull(emptyIndex === -1 || emptyIndex === boxesClone.length - 1)
     setBoxes(boxesClone)
+    setRerollCount(
+      boxesClone[emptyIndex].reward?.type === RewardType.REROLL
+        ? (value) => value + 1
+        : rerollCount
+    )
+    setplusOneCount(
+      boxesClone[emptyIndex].reward?.type === RewardType.PLUS_ONE
+        ? (value) => value + 1
+        : plusOneCount
+    )
     setFoxCount(
       boxesClone[emptyIndex].reward?.type === RewardType.FOX
         ? (value) => value + 1
@@ -142,6 +163,18 @@ export function useSection(color: SectionColor) {
     for (let i = 0; i < COLUMN_COUNT; i++) {
       if (isColumnCompleted(boxes, i)) {
         score += yellowRewards.columns[i]?.points || 0
+      }
+    }
+
+    if (isDiagonalCompleted(boxes)) {
+      if (yellowRewards.diagonal?.reward?.type === RewardType.REROLL) {
+        rerolls += 1
+      } else if (
+        yellowRewards.diagonal?.reward?.type === RewardType.PLUS_ONE
+      ) {
+        plusOnes += 1
+      } else if (yellowRewards.diagonal?.reward?.type === RewardType.FOX) {
+        foxes += 1
       }
     }
 

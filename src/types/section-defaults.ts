@@ -1,4 +1,4 @@
-import { BoxType, IBox, IReward, ISectionRewards, RewardType, SectionColor } from './types'
+import { BoxType, IBox, IReward, IRound, ISectionRewards, RewardType, SectionColor } from './types'
 
 const yellowBoxDefault: IBox = {
   type: BoxType.CHECK,
@@ -176,3 +176,29 @@ export const blueRewards: ISectionRewards = {
     { reward: { type: RewardType.PLUS_ONE } },
   ],
 }
+
+
+export const rounds: IRound[] = [
+  {
+    value: 1,
+    reward: RewardType.REROLL,
+  },
+  {
+    value: 2,
+    reward: RewardType.PLUS_ONE,
+  },
+  {
+    value: 3,
+    reward: RewardType.REROLL,
+  },
+  {
+    value: 4,
+    reward: RewardType.CHECK_OR_SIX,
+  },
+  {
+    value: 5,
+  },
+  {
+    value: 6,
+  },
+]

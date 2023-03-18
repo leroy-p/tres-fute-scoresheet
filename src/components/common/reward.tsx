@@ -17,6 +17,7 @@ function Reward({ data }: IProps) {
       {(type === RewardType.REROLL) && <p>R</p>}
       {(type === RewardType.PLUS_ONE) && <p>+1</p>}
       {(type === RewardType.FOX) && <p>F</p>}
+      {(type === RewardType.CHECK_OR_SIX) && <p>X|6</p>}
     </Container>
   )
 }

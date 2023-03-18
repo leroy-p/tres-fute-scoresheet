@@ -16,6 +16,8 @@ export function useRoot() {
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
   const [origin, setOrigin] = useState<SectionColor | null>(null)
   const [totalScore, setTotalScore] = useState<number>(0)
+  const [rerollCount, setRerollCount] = useState<number>(0)
+  const [plusOneCount, setPlusOneCount] = useState<number>(0)
 
   useEffect(() => {
     const foxCount =
@@ -54,6 +56,57 @@ export function useRoot() {
     orangeData.foxCount,
     purpleData.foxCount,
   ])
+
+  useEffect(() => {
+    const rerolls =
+      yellowData.rerollCount +
+      blueData.rerollCount +
+      greenData.rerollCount +
+      orangeData.rerollCount +
+      purpleData.rerollCount
+
+      if (rerolls > rerollCount) {
+        for (let i = rerollCount; i < rerolls; i++) {
+          bonusData.addReroll()
+        }
+      }
+
+      setRerollCount(rerolls)
+  }, [
+    yellowData.rerollCount,
+    blueData.rerollCount,
+    greenData.rerollCount,
+    orangeData.rerollCount,
+    purpleData.rerollCount,
+    bonusData,
+    rerollCount,
+  ])
+
+  useEffect(() => {
+    const plusOnes =
+      yellowData.plusOneCount +
+      blueData.plusOneCount +
+      greenData.plusOneCount +
+      orangeData.plusOneCount +
+      purpleData.plusOneCount
+
+      if (plusOnes > plusOneCount) {
+        for (let i = plusOneCount; i < plusOnes; i++) {
+          bonusData.addPlusOne()
+        }
+      }
+
+      setPlusOneCount(plusOnes)
+  }, [
+    yellowData.plusOneCount,
+    blueData.plusOneCount,
+    greenData.plusOneCount,
+    orangeData.plusOneCount,
+    purpleData.plusOneCount,
+    bonusData,
+    plusOneCount,
+  ])
+
 
   function resetDicePicker() {
     setDicePickerVisible(false)

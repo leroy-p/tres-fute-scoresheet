@@ -29,6 +29,7 @@ export enum RewardType {
   FOX = 'FOX',
   REROLL = 'REROLL',
   PLUS_ONE = 'PLUS_ONE',
+  CHECK_OR_SIX = 'CHECK_OR_SIX',
 }
 
 export interface IBox {
@@ -51,4 +52,9 @@ export interface ISectionRewards {
   rows: Array<{ reward?: IReward; points?: number }>
   columns: Array<{ reward?: IReward; points?: number }>
   diagonal?: { reward?: IReward; points?: number }
+}
+
+export interface IRound {
+  value: number
+  reward?: RewardType
 }

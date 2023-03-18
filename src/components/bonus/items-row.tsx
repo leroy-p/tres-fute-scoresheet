@@ -8,20 +8,24 @@ interface IProps {
   items: BonusItemStatus[]
   isPointer: boolean
   type: RewardType
+  useAction: () => void
 }
 
-function ItemsRow({ items, isPointer, type }: IProps) {
+function ItemsRow({ items, isPointer, type, useAction }: IProps) {
   return (
     <Container isPointer={isPointer}>
-      <TypeContainer>
-        <Reward data={{ type }} />
-      </TypeContainer>
-      {items.map((item, index) => (
-        <Item key={index}>
-          {item === BonusItemStatus.READY && <p>/</p>}
-          {item === BonusItemStatus.USED && <p>X</p>}
-        </Item>
-      ))}
+      <div>
+        <TypeContainer>
+          <Reward data={{ type }} />
+        </TypeContainer>
+        {items.map((item, index) => (
+          <Item key={index}>
+            {item === BonusItemStatus.READY && <p>/</p>}
+            {item === BonusItemStatus.USED && <p>X</p>}
+          </Item>
+        ))}
+      </div>
+      <button onClick={useAction}>use</button>
     </Container>
   )
 }
@@ -34,10 +38,23 @@ const Container = styled.div<{ isPointer: boolean }>`
   cursor: ${({ isPointer }) => (isPointer ? 'pointer' : 'auto')};
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  gap: 8px;
+  justify-content: space-between;
   padding: 8px;
   width: 100%;
+
+  & > div {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  & > button {
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    padding: 8px;
+  }
 `
 
 const Item = styled.div`
@@ -75,5 +92,4 @@ const TypeContainer = styled.div`
     height: calc((100vw - 16px) / 11 - 8px);
     width: calc((100vw - 16px) / 11 - 8px);
   }
-
 `

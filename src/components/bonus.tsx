@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { useBonus } from '../hooks/use-bonus'
 import { RewardType } from '../types/types'
 import ItemsRow from './bonus/items-row'
+import Rounds from './common/rounds'
+
+import { rounds } from '../types/section-defaults'
 
 interface IProps {
   data: ReturnType<typeof useBonus>
@@ -15,24 +18,17 @@ function Bonus({ data, score }: IProps) {
     rerollItems,
     hasPlusOneAvailable,
     hasRerollAvailable,
-    addPlusOne,
     addReroll,
-    usePlusOne,
+    addPlusOne,
     useReroll,
+    usePlusOne,
   } = data
 
   return (
     <Container>
-      <ItemsRow items={rerollItems} isPointer={hasRerollAvailable} type={RewardType.REROLL} />
-      <ItemsRow items={plusOneItems} isPointer={hasPlusOneAvailable} type={RewardType.PLUS_ONE} />
-      <ButtonsContainer>
-        <button onClick={addReroll}>add reroll</button>
-        <button onClick={useReroll}>use reroll</button>
-      </ButtonsContainer>
-      <ButtonsContainer>
-        <button onClick={addPlusOne}>add +1</button>
-        <button onClick={usePlusOne}>use +1</button>
-      </ButtonsContainer>
+      <Rounds addPlusOne={addPlusOne} addReroll={addReroll} rounds={rounds} />
+      <ItemsRow items={rerollItems} isPointer={hasRerollAvailable} type={RewardType.REROLL} useAction={useReroll} />
+      <ItemsRow items={plusOneItems} isPointer={hasPlusOneAvailable} type={RewardType.PLUS_ONE} useAction={usePlusOne} />
       <ScoreDisplayer>Total score: {score}</ScoreDisplayer>
     </Container>
   )
@@ -47,25 +43,10 @@ const Container = styled.div`
   flex-direction: column;
   height: calc(100% / 3 - 8px);
   justify-content: center;
-  gap: 16px;
+  gap: 8px;
   padding: 8px;
   position: relative;
   width: calc(100% - 16px);
-`
-
-const ButtonsContainer = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 16px;
-  width: 100%;
-
-  & > button {
-    color: #ffffff;
-    border: solid 1px #ffffff;
-    padding: 8px;
-  }
 `
 
 const ScoreDisplayer = styled.p`

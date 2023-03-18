@@ -21,12 +21,23 @@ export function isRowCompleted(boxes: IBox[], index: number): boolean {
     if (i >= boxes.length) break
 
     if (!boxes[i].isChecked) {
-      console.log('false')
-
       return false
     }
   }
 
-  console.log('true')
+  return true
+}
+
+export function isDiagonalCompleted(boxes: IBox[]): boolean {
+  let acc = 0
+
+  for (let i = 0; i < boxes.length; i += COLUMN_COUNT) {
+    if (!boxes[i + acc]?.isChecked) {
+      return false
+    }
+
+    acc += 1
+  }
+
   return true
 }
