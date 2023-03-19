@@ -17,11 +17,9 @@ function Menu({ close, reset }: IProps) {
       <div onClick={(event) => event.stopPropagation()}>
         <h6>Menu</h6>
         <Button onClick={onReset}>Reset</Button>
-        <Button onClick={close}>
-          <a href="/dices" target="_blank">
-            Dices
-          </a>
-        </Button>
+        <a href="/dices" target="_blank">
+          <Button onClick={close}>Dices</Button>
+        </a>
       </div>
     </Container>
   )
@@ -59,6 +57,10 @@ const Container = styled.div<{ isLoading?: boolean }>`
       font-size: 24px;
       font-weight: bold;
       margin: 0 0 48px 0;
+    }
+
+    & > a {
+      width: 100%;
     }
   }
 `
