@@ -36,6 +36,7 @@ export interface IBox {
   type: BoxType
   isChecked: boolean
   isCheckedByDefault: boolean,
+  isFilled: boolean
   value: number
   multiplier: number
   higherThan?: number
@@ -58,4 +59,11 @@ export interface ISectionRewards {
 export interface IRound {
   value: number
   reward?: RewardType
+}
+
+
+export interface IHistoryItem {
+  color?: SectionColor
+  value?: number
+  index?: number
 }

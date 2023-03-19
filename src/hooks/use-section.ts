@@ -20,7 +20,7 @@ export function useSection(color: SectionColor) {
   const [isFull, setIsFull] = useState<boolean>(false)
   const [score, setScore] = useState<number>(0)
   const [rerollCount, setRerollCount] = useState<number>(0)
-  const [plusOneCount, setplusOneCount] = useState<number>(0)
+  const [plusOneCount, setPlusOneCount] = useState<number>(0)
   const [foxCount, setFoxCount] = useState<number>(0)
 
   function checkGridBox(index: number) {
@@ -35,6 +35,7 @@ export function useSection(color: SectionColor) {
     let foxes = 0
 
     boxesClone[index].isChecked = true
+    boxesClone[index].isFilled = true
 
     if (color === SectionColor.BLUE) {
       const checkedCount = boxesClone.filter(
@@ -57,7 +58,7 @@ export function useSection(color: SectionColor) {
 
     setScore(score)
     setRerollCount(rerolls)
-    setplusOneCount(plusOnes)
+    setPlusOneCount(plusOnes)
     setFoxCount(foxes)
     setIsFull(emptyIndex === -1)
     setBoxes(boxesClone)
@@ -71,6 +72,7 @@ export function useSection(color: SectionColor) {
 
     if (emptyIndex !== -1) {
       boxesClone[emptyIndex].isChecked = true
+      boxesClone[emptyIndex].isFilled = true
     }
 
     const checkedCount = boxesClone.filter((b) => b.isChecked).length
@@ -96,12 +98,11 @@ export function useSection(color: SectionColor) {
       0
     )
 
-
     setScore(greenScores[checkedCount - 1])
     setIsFull(emptyIndex === -1 || emptyIndex === boxesClone.length - 1)
     setBoxes(boxesClone)
     setRerollCount(rerolls)
-    setplusOneCount(plusOnes)
+    setPlusOneCount(plusOnes)
     setFoxCount(foxes)
   }
 
@@ -114,6 +115,7 @@ export function useSection(color: SectionColor) {
 
     if (emptyIndex !== -1) {
       boxesClone[emptyIndex].value = dice * boxesClone[emptyIndex].multiplier
+      boxesClone[emptyIndex].isFilled = true
     }
 
     const score = boxesClone.reduce((acc, current) => acc + current.value, 0)
@@ -143,7 +145,7 @@ export function useSection(color: SectionColor) {
     setIsFull(emptyIndex === -1 || emptyIndex === boxesClone.length - 1)
     setBoxes(boxesClone)
     setRerollCount(rerolls)
-    setplusOneCount(plusOnes)
+    setPlusOneCount(plusOnes)
     setFoxCount(foxes)
   }
 
@@ -241,6 +243,100 @@ export function useSection(color: SectionColor) {
     return { rerollCount: rerolls, plusOneCount: plusOnes, foxCount: foxes }
   }
 
+  function unfillGridRowBox(index: number) {
+    if (color !== SectionColor.YELLOW && color !== SectionColor.BLUE) return
+    if (index < 0 && index >= boxes.length) return
+
+    const boxesClone = [...boxes]
+    let score = 0
+    let rerolls = 0
+    let plusOnes = 0
+    let foxes = 0
+
+    boxesClone[index].isChecked = false
+    boxesClone[index].isFilled = false
+
+    if (color === SectionColor.BLUE) {
+      const checkedCount = boxesClone.filter(
+        (b) => b.isChecked && b.type !== BoxType.EMPTY
+      ).length
+      const blueRewards = getBlueRewards()
+
+      score = checkedCount === 0 ? 0 : blueScores[checkedCount - 1]
+      rerolls = blueRewards.rerollCount
+      plusOnes = blueRewards.plusOneCount
+      foxes = blueRewards.foxCount
+    } else {
+      const yellowRewards = getYellowScoreAndRewards()
+
+      score = yellowRewards.score
+      rerolls = yellowRewards.rerollCount
+      plusOnes = yellowRewards.plusOneCount
+      foxes = yellowRewards.foxCount
+    }
+
+    setScore(score)
+    setRerollCount(rerolls)
+    setPlusOneCount(plusOnes)
+    setFoxCount(foxes)
+    setIsFull(false)
+    setBoxes(boxesClone)
+  }
+
+  function unfillLastRowBox() {
+    const boxesClone = [...boxes]
+    const emptyIndex = boxesClone.findIndex((b) => !b.isFilled)
+    let checkedCount = 0
+    let score = 0
+
+    if (emptyIndex === -1) {
+      boxesClone[boxesClone.length - 1].isFilled = false
+      boxesClone[boxesClone.length - 1].isChecked = false
+      boxesClone[boxesClone.length - 1].value = 0
+      checkedCount = boxesClone.length - 1
+    } else if (emptyIndex > 0) {
+      boxesClone[emptyIndex - 1].isFilled = false
+      boxesClone[emptyIndex - 1].isChecked = false
+      boxesClone[emptyIndex - 1].value = 0
+      checkedCount = emptyIndex - 1
+    }
+
+    if (color === SectionColor.GREEN) {
+      score = checkedCount === 0 ? 0 : greenScores[checkedCount - 1]
+    } else {
+      score = boxesClone.reduce((acc, current) => acc + current.value, 0)
+    }
+
+    const rerolls = boxesClone.reduce(
+      (acc, current) =>
+        current.value > 0 && current.reward?.type === RewardType.REROLL
+          ? acc + 1
+          : acc,
+      0
+    )
+    const plusOnes = boxesClone.reduce(
+      (acc, current) =>
+        current.value > 0 && current.reward?.type === RewardType.PLUS_ONE
+          ? acc + 1
+          : acc,
+      0
+    )
+    const foxes = boxesClone.reduce(
+      (acc, current) =>
+        current.value > 0 && current.reward?.type === RewardType.FOX
+          ? acc + 1
+          : acc,
+      0
+    )
+
+    setScore(score)
+    setIsFull(false)
+    setBoxes(boxesClone)
+    setRerollCount(rerolls)
+    setPlusOneCount(plusOnes)
+    setFoxCount(foxes)
+  }
+
   function reset() {
     const boxes: IBox[] = []
 
@@ -252,7 +348,7 @@ export function useSection(color: SectionColor) {
     setIsFull(false)
     setScore(0)
     setRerollCount(0)
-    setplusOneCount(0)
+    setPlusOneCount(0)
     setFoxCount(0)
   }
 
@@ -269,5 +365,7 @@ export function useSection(color: SectionColor) {
     addRowBox,
     getLastDice,
     reset,
+    unfillGridRowBox,
+    unfillLastRowBox,
   }
 }

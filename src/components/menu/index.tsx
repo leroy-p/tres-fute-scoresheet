@@ -4,11 +4,17 @@ import styled from 'styled-components'
 interface IProps {
   close: () => void
   reset: () => void
+  undo: () => void
 }
 
-function Menu({ close, reset }: IProps) {
+function Menu({ close, reset, undo }: IProps) {
   function onReset() {
     reset()
+    close()
+  }
+
+  function onUndo() {
+    undo()
     close()
   }
 
@@ -16,6 +22,7 @@ function Menu({ close, reset }: IProps) {
     <Container onClick={close}>
       <div onClick={(event) => event.stopPropagation()}>
         <h6>Menu</h6>
+        <Button onClick={onUndo}>Undo</Button>
         <Button onClick={onReset}>Reset</Button>
         <a href="/dices" target="_blank">
           <Button onClick={close}>Dices</Button>

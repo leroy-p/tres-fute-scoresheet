@@ -29,6 +29,7 @@ function Root() {
     addRowDice,
     addGreenDice,
     setIsMenuOpen,
+    undo,
     reset,
   } = useRoot()
 
@@ -67,7 +68,7 @@ function Root() {
           minimumDice={minimumDiceSelectable}
         />
       )}
-      {isMenuOpen && <Menu close={() => setIsMenuOpen(false)} reset={reset} />}
+      {isMenuOpen && <Menu close={() => setIsMenuOpen(false)} reset={reset} undo={undo} />}
     </Container>
   )
 }

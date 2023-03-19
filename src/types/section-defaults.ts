@@ -1,9 +1,10 @@
-import { BoxType, IBox, IReward, IRound, ISectionRewards, RewardType, SectionColor } from './types'
+import { BoxType, IBox, IRound, ISectionRewards, RewardType, SectionColor } from './types'
 
 const yellowBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
   isCheckedByDefault: false,
+  isFilled: false,
   value: 0,
   multiplier: 1,
 }
@@ -31,6 +32,7 @@ const blueBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
   isCheckedByDefault: false,
+  isFilled: false,
   value: 0,
   multiplier: 1,
 }
@@ -54,6 +56,7 @@ const greenBoxDefault: IBox = {
   type: BoxType.CHECK,
   isChecked: false,
   isCheckedByDefault: false,
+  isFilled: false,
   value: 0,
   multiplier: 1,
 }
@@ -86,6 +89,7 @@ const orangeBoxDefault: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
   isCheckedByDefault: false,
+  isFilled: false,
   value: 0,
   multiplier: 1,
 }
@@ -114,6 +118,7 @@ const purpleBoxDefault: IBox = {
   type: BoxType.NUMBER,
   isChecked: false,
   isCheckedByDefault: false,
+  isFilled: false,
   value: 0,
   multiplier: 1,
 }

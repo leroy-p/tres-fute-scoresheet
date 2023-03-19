@@ -25,6 +25,24 @@ export function useBonus() {
     setPlusOneItems(plusOneItemsClone)
   }
 
+  function removeLastPlusOne() {
+    const plusOneItemsClone = [...plusOneItems]
+    const emptyIndex = plusOneItemsClone.findIndex(
+      (i) => i === BonusItemStatus.EMPTY
+    )
+
+    if (emptyIndex === -1) {
+      plusOneItemsClone[plusOneItemsClone.length - 1] = BonusItemStatus.EMPTY
+    } else if (emptyIndex > 0) {
+      plusOneItemsClone[emptyIndex - 1] = BonusItemStatus.EMPTY
+    }
+
+    setHasPlusOneAvailable(
+      plusOneItemsClone.findIndex((i) => i === BonusItemStatus.READY) !== -1
+    )
+    setPlusOneItems(plusOneItemsClone)
+  }
+
   function usePlusOne() {
     const plusOneItemsClone = [...plusOneItems]
     const index = plusOneItemsClone.findIndex(
@@ -57,11 +75,28 @@ export function useBonus() {
     setRerollItems(rerollItemsClone)
   }
 
+
+  function removeLastReroll() {
+    const rerollItemsClone = [...rerollItems]
+    const emptyIndex = rerollItemsClone.findIndex(
+      (i) => i === BonusItemStatus.EMPTY
+    )
+
+    if (emptyIndex === -1) {
+      rerollItemsClone[rerollItemsClone.length - 1] = BonusItemStatus.EMPTY
+    } else if (emptyIndex > 0) {
+      rerollItemsClone[emptyIndex - 1] = BonusItemStatus.EMPTY
+    }
+
+    setHasRerollAvailable(
+      rerollItemsClone.findIndex((i) => i === BonusItemStatus.READY) !== -1
+    )
+    setRerollItems(rerollItemsClone)
+  }
+
   function useReroll() {
     const rerollItemsClone = [...rerollItems]
-    const index = rerollItemsClone.findIndex(
-      (i) => i === BonusItemStatus.READY
-    )
+    const index = rerollItemsClone.findIndex((i) => i === BonusItemStatus.READY)
 
     if (index !== -1) {
       rerollItemsClone[index] = BonusItemStatus.USED
@@ -71,7 +106,7 @@ export function useBonus() {
       (i) => i === BonusItemStatus.READY
     )
 
-    setHasPlusOneAvailable(readyIndex !== -1)
+    setHasRerollAvailable(readyIndex !== -1)
     setRerollItems(rerollItemsClone)
   }
 
@@ -82,13 +117,14 @@ export function useBonus() {
     setRerollItems(Array(7).fill(BonusItemStatus.EMPTY))
   }
 
-
   return {
     plusOneItems,
     rerollItems,
     addPlusOne,
+    removeLastPlusOne,
     usePlusOne,
     addReroll,
+    removeLastReroll,
     useReroll,
     hasPlusOneAvailable,
     hasRerollAvailable,

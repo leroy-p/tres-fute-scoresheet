@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SectionColor } from '../types/types'
 import { useBonus } from './use-bonus'
+import { useGameHistory } from './use-history'
 
 import { useSection } from './use-section'
 
@@ -19,21 +20,7 @@ export function useRoot() {
   const [rerollCount, setRerollCount] = useState<number>(0)
   const [plusOneCount, setPlusOneCount] = useState<number>(0)
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-
-  function reset() {
-    yellowData.reset()
-    blueData.reset()
-    greenData.reset()
-    orangeData.reset()
-    purpleData.reset()
-    bonusData.reset()
-    setDicePickerVisible(false)
-    setMinimumDiceSelectable(0)
-    setOrigin(null)
-    setTotalScore(0)
-    setRerollCount(0)
-    setPlusOneCount(9)
-  }
+  const{ addHistoryItem, removeLastHistoryItem, lastHistoryItem, resetHistory } = useGameHistory()
 
   useEffect(() => {
     const foxCount =
@@ -85,6 +72,8 @@ export function useRoot() {
         for (let i = rerollCount; i < rerolls; i++) {
           bonusData.addReroll()
         }
+      } else if (rerolls < rerollCount) {
+        bonusData.removeLastReroll()
       }
 
       setRerollCount(rerolls)
@@ -110,6 +99,8 @@ export function useRoot() {
         for (let i = plusOneCount; i < plusOnes; i++) {
           bonusData.addPlusOne()
         }
+      } else if (plusOnes < plusOneCount) {
+        bonusData.removeLastPlusOne()
       }
 
       setPlusOneCount(plusOnes)
@@ -138,6 +129,7 @@ export function useRoot() {
       purpleData.addRowBox(value)
     }
 
+    addHistoryItem({ color: origin || undefined, value })
     setOrigin(null)
   }
 
@@ -165,10 +157,48 @@ export function useRoot() {
     } else if (origin === SectionColor.BLUE) {
       blueData.checkGridBox(index)
     }
+
+    addHistoryItem({ color: origin, index })
   }
 
   function addGreenDice() {
     greenData.checkRowBox()
+    addHistoryItem({ color: SectionColor.GREEN })
+  }
+
+  function undo() {
+    if (!lastHistoryItem) return
+
+    if (lastHistoryItem.color === SectionColor.YELLOW && lastHistoryItem.index !== undefined) {
+      yellowData.unfillGridRowBox(lastHistoryItem.index)
+    } else if (lastHistoryItem.color === SectionColor.BLUE && lastHistoryItem.index !== undefined) {
+      blueData.unfillGridRowBox(lastHistoryItem.index)
+    } else if (lastHistoryItem.color === SectionColor.GREEN) {
+      greenData.unfillLastRowBox()
+    } else if (lastHistoryItem.color === SectionColor.ORANGE) {
+      orangeData.unfillLastRowBox()
+    } else if (lastHistoryItem.color === SectionColor.PURPLE) {
+      purpleData.unfillLastRowBox()
+    }
+
+    removeLastHistoryItem()
+  }
+
+
+  function reset() {
+    yellowData.reset()
+    blueData.reset()
+    greenData.reset()
+    orangeData.reset()
+    purpleData.reset()
+    bonusData.reset()
+    setDicePickerVisible(false)
+    setMinimumDiceSelectable(0)
+    setOrigin(null)
+    setTotalScore(0)
+    setRerollCount(0)
+    setPlusOneCount(9)
+    resetHistory()
   }
 
   return {
@@ -189,6 +219,7 @@ export function useRoot() {
     addRowDice,
     addGreenDice,
     setIsMenuOpen,
+    undo,
     reset,
   }
 }
