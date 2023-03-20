@@ -18,7 +18,12 @@ function Section({ data, isPurple, rewards, points, clickEvent }: IProps) {
 
   if (data.color === SectionColor.YELLOW || data.color === SectionColor.BLUE) {
     return (
-      <GridSection sectionColor={data.color} color={data.color.toLowerCase()} points={points} rewards={rewards} score={data.score}>
+      <GridSection
+        color={data.color}
+        points={points}
+        rewards={rewards}
+        score={data.score}
+      >
         <>
           {boxes.map((box, index) => (
             <Box
@@ -42,9 +47,9 @@ function Section({ data, isPurple, rewards, points, clickEvent }: IProps) {
   ) {
     return (
       <RowSection
+        color={data.color}
         score={data.score}
         clickEvent={() => clickEvent(0)}
-        color={data.color.toLowerCase()}
         isPointer={!data.isFull}
       >
         <>

@@ -46,15 +46,17 @@ const ItemContainer = styled.div<{ color: SectionColor; itemsCount: number }>`
     color: ${({ color }) => {
       switch (color) {
         case SectionColor.YELLOW:
-          return 'yellow'
+          return '#ffefa1'
         case SectionColor.BLUE:
-          return 'blue'
+          return '#82b8f9'
         case SectionColor.GREEN:
-          return 'green'
+          return '#79d8b6'
         case SectionColor.ORANGE:
-          return 'orange'
+          return '#fcad77'
         case SectionColor.PURPLE:
-          return 'purple'
+          return '#c697dd'
+        case SectionColor.WHITE:
+          return '#ffffff'
         default:
           return '#000000'
       }

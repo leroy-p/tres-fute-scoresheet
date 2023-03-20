@@ -62,6 +62,7 @@ const Container = styled.div`
 const SettingsButton = styled.button`
   align-items: center;
   background-color: #444444;
+  border-radius: 8px;
   border: solid 2px #ffffff;
   color: #ffffff;
   display: flex;

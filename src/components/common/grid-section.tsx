@@ -7,8 +7,7 @@ import ScoreDisplayer from './score-displayer'
 import SectionScoresTable from './section-scores-table'
 
 interface IProps {
-  sectionColor: SectionColor
-  color: string
+  color: SectionColor
   children: JSX.Element
   rewards?: ISectionRewards
   score: number
@@ -17,7 +16,6 @@ interface IProps {
 }
 
 function GridSection({
-  sectionColor,
   color,
   children,
   rewards,
@@ -28,7 +26,7 @@ function GridSection({
   return (
     <Container color={color} onClick={clickEvent}>
       <MainContainer>
-        {points && <SectionScoresTable points={points} color={sectionColor} />}
+        {points && <SectionScoresTable points={points} color={color} />}
         <TopContainer>
           <GridContainer>{children}</GridContainer>
           <RowRewardsContainer>
@@ -36,7 +34,7 @@ function GridSection({
               rewards.rows.map(({ reward, points }, index) => (
                 <RewardContainer key={index}>
                   {reward && <Reward data={reward} />}
-                  {points && <Points color={sectionColor} value={points} />}
+                  {points && <Points color={color} value={points} />}
                 </RewardContainer>
               ))}
           </RowRewardsContainer>
@@ -47,7 +45,7 @@ function GridSection({
               rewards.columns.map(({ reward, points }, index) => (
                 <RewardContainer key={index}>
                   {reward && <Reward data={reward} />}
-                  {points && <Points color={sectionColor} value={points} />}
+                  {points && <Points color={color} value={points} />}
                 </RewardContainer>
               ))}
           </ColumnRewardsContainer>
@@ -56,7 +54,7 @@ function GridSection({
               <Reward data={rewards.diagonal.reward} />
             )}
             {rewards?.diagonal?.points && (
-              <Points color={sectionColor} value={rewards.diagonal.points} />
+              <Points color={color} value={rewards.diagonal.points} />
             )}
           </RewardContainer>
         </BottomContainer>
@@ -68,9 +66,19 @@ function GridSection({
 
 export default GridSection
 
-const Container = styled.div<{ color: string }>`
+const Container = styled.div<{ color: SectionColor }>`
   align-items: center;
-  border: ${({ color }) => `solid 2px ${color}`};
+  border: ${({ color }) => {
+    if (color === SectionColor.YELLOW) return 'solid 2px #ffefa1'
+    if (color === SectionColor.BLUE) return 'solid 2px #82b8f9'
+    if (color === SectionColor.GREEN) return 'solid 2px #79d8b6'
+    if (color === SectionColor.ORANGE) return 'solid 2px #fcad77'
+    if (color === SectionColor.PURPLE) return 'solid 2px #c697dd'
+    if (color === SectionColor.WHITE) return 'solid 2px #ffffff'
+
+    return 'solid 2px #000000';
+  }};
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   height: calc(100% / 3 - 8px);

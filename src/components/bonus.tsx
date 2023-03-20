@@ -55,6 +55,7 @@ export default Bonus
 const Container = styled.div`
   align-items: center;
   border: solid 2px black;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   height: calc(100% / 3 - 8px);

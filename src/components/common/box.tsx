@@ -105,13 +105,13 @@ const CheckedText = styled.p`
 `
 
 const MultiplierText = styled.p<{ isHidden?: boolean }>`
-  color: orange;
+  color: #fcad77;
   opacity: ${({ isHidden }) => (isHidden ? '0.7' : '1')};
   font-weight: bold;
 `
 
 const HigherThanText = styled.p<{ isHidden?: boolean }>`
-  color: green;
+  color: #79d8b6;
   opacity: ${({ isHidden }) => (isHidden ? '0.7' : '1')};
   font-weight: bold;
 `
@@ -127,7 +127,7 @@ const PurpleDecorator = styled.div`
   width: 100%;
 
   & > p {
-    color: purple;
+    color: #c697dd;
     font-size: 24px;
     font-weight: bold;
   }

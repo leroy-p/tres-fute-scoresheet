@@ -24,17 +24,17 @@ const Container = styled.div<{ color: SectionColor; isCursor: boolean }>`
   background-color: ${({ color }) => {
     switch (color) {
       case SectionColor.YELLOW:
-        return 'yellow'
+        return '#ffefa1'
       case SectionColor.BLUE:
-        return 'blue'
+        return '#82b8f9'
       case SectionColor.GREEN:
-        return 'green'
+        return '#79d8b6'
       case SectionColor.ORANGE:
-        return 'orange'
+        return '#fcad77'
       case SectionColor.PURPLE:
-        return 'purple'
+        return '#c697dd'
       case SectionColor.WHITE:
-        return 'white'
+        return '#ffffff'
       default:
         return '#000000'
     }

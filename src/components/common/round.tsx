@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IRound } from '../../types/types'
+import { IRound, RewardType } from '../../types/types'
 import Reward from './reward'
 
 interface IProps {
@@ -16,7 +16,7 @@ function Round({ round, action, isChecked }: IProps) {
         {round.value}
         {isChecked && <CheckedText>X</CheckedText>}
       </BoxContainer>
-      <RewardContainer>
+      <RewardContainer  type={round.reward}>
         {round.reward && <Reward data={{ type: round.reward }} />}
       </RewardContainer>
     </Container>
@@ -28,6 +28,7 @@ export default Round
 const Container = styled.div<{ isChecked: boolean }>`
   align-items: center;
   border: solid 2px #ffffff;
+  border-radius: 12px;
   cursor: ${({ isChecked }) => (isChecked ? 'auto' : 'pointer')};
   display: flex;
   flex-direction: column;
@@ -58,16 +59,16 @@ const BoxContainer = styled.div`
   }
 `
 
-const RewardContainer = styled.div`
+const RewardContainer = styled.div<{ type?: RewardType }>`
   align-items: center;
   display: flex;
   height: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 2);
   justify-content: center;
-  width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
+  width: ${({ type }) => type === RewardType.CHECK_OR_SIX ? 'calc((100vh * 9 / 16 - 16px) / 11 + 8px);' : 'calc((100vh * 9 / 16 - 16px) / 11 - 8px)'};
 
   @media (orientation: portrait) {
     height: calc(((100vw - 16px) / 11 - 8px) / 2);
-    width: calc((100vw - 16px) / 11 - 8px);
+    width: ${({ type }) => type === RewardType.CHECK_OR_SIX ? 'calc((100vw - 16px) / 11 + 8px);' : 'calc((100vw - 16px) / 11 - 8px)'};
   }
 
   & > div {

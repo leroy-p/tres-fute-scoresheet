@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import { IReward, RewardType, SectionColor } from '../../types/types'
 
+import foxImage from '../../assets/images/icon-raccoon.png'
+
 interface IProps {
   data: IReward
 }
@@ -14,10 +16,10 @@ function Reward({ data }: IProps) {
     <Container color={color} type={type}>
       {value && <p>{value}</p>}
       {type === RewardType.DICE && !value && <p>X</p>}
-      {(type === RewardType.REROLL) && <p>R</p>}
-      {(type === RewardType.PLUS_ONE) && <p>+1</p>}
-      {(type === RewardType.FOX) && <p>F</p>}
-      {(type === RewardType.CHECK_OR_SIX) && <p>X|6</p>}
+      {type === RewardType.REROLL && <p>R</p>}
+      {type === RewardType.PLUS_ONE && <p>+1</p>}
+      {type === RewardType.FOX && <img alt="" src={foxImage} />}
+      {type === RewardType.CHECK_OR_SIX && <p>X|6</p>}
     </Container>
   )
 }
@@ -26,17 +28,28 @@ export default Reward
 
 const Container = styled.div<{ color?: SectionColor; type: RewardType }>`
   align-items: center;
-  border: solid 1px #ffffff;
+  border: ${({ color, type }) => {
+      if (type === RewardType.FOX) return 'none'
+      if (color === SectionColor.YELLOW) return 'solid 2px #ce8106'
+      if (color === SectionColor.BLUE) return 'solid 2px #1f3a7c'
+      if (color === SectionColor.GREEN) return 'solid 2px #07593a'
+      if (color === SectionColor.ORANGE) return 'solid 2px #c65720'
+      if (color === SectionColor.PURPLE) return 'solid 2px #742c96'
+      if (color === SectionColor.WHITE) return 'solid 2px #ffffff'
+
+      return 'solid 2px #ffffff'
+    }};
   border-radius: 4px;
   background-color: ${({ color, type }) => {
-    if (type === RewardType.FOX) return 'red'
-    if (color === SectionColor.YELLOW) return 'yellow'
-    if (color === SectionColor.BLUE) return 'blue'
-    if (color === SectionColor.GREEN) return 'green'
-    if (color === SectionColor.ORANGE) return 'orange'
-    if (color === SectionColor.PURPLE) return 'purple'
+    if (type === RewardType.FOX) return 'transparent'
+    if (color === SectionColor.YELLOW) return '#ffefa1'
+    if (color === SectionColor.BLUE) return '#82b8f9'
+    if (color === SectionColor.GREEN) return '#79d8b6'
+    if (color === SectionColor.ORANGE) return '#fcad77'
+    if (color === SectionColor.PURPLE) return '#c697dd'
+    if (color === SectionColor.WHITE) return '#ffffff'
 
-    return '#000000';
+    return '#000000'
   }};
   display: flex;
   flex-direction: column;
@@ -45,7 +58,21 @@ const Container = styled.div<{ color?: SectionColor; type: RewardType }>`
   width: 100%;
 
   & > p {
-    color: ${({ color  }) => color === SectionColor.YELLOW ? '#000000' : '#ffffff'};
+    color: ${({ color }) => {
+      if (color === SectionColor.YELLOW) return '#ce8106'
+      if (color === SectionColor.BLUE) return '#1f3a7c'
+      if (color === SectionColor.GREEN) return '#07593a'
+      if (color === SectionColor.ORANGE) return '#c65720'
+      if (color === SectionColor.PURPLE) return '#742c96'
+      if (color === SectionColor.WHITE) return '#ffffff'
+
+      return '#ffffff'
+    }};
     font-size: 12px;
+  }
+
+  & > img {
+    height: calc(100% + 8px);
+    width: calc(100% + 8px);
   }
 `
