@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { IReward, RewardType, SectionColor } from '../../types/types'
 
+import rerollImage from '../../assets/images/reroll.png'
 import foxImage from '../../assets/images/icon-raccoon.png'
 
 interface IProps {
@@ -16,7 +17,7 @@ function Reward({ data }: IProps) {
     <Container color={color} type={type}>
       {value && <p>{value}</p>}
       {type === RewardType.DICE && !value && <p>X</p>}
-      {type === RewardType.REROLL && <p>R</p>}
+      {type === RewardType.REROLL && <img alt='' className='reroll' src={rerollImage} />}
       {type === RewardType.PLUS_ONE && <p>+1</p>}
       {type === RewardType.FOX && <img alt="" src={foxImage} />}
       {type === RewardType.CHECK_OR_SIX && <p>X|6</p>}
@@ -74,5 +75,10 @@ const Container = styled.div<{ color?: SectionColor; type: RewardType }>`
   & > img {
     height: calc(100% + 8px);
     width: calc(100% + 8px);
+  }
+
+  .reroll {
+    height: 80%;
+    width: 80%;
   }
 `

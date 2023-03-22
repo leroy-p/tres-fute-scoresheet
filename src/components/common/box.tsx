@@ -119,6 +119,7 @@ const HigherThanText = styled.p<{ isHidden?: boolean }>`
 const PurpleDecorator = styled.div`
   align-items: center;
   display: flex;
+  flex-direction: row;
   height: 100%;
   justify-content: center;
   left: calc(-50% - 4px);
@@ -127,18 +128,25 @@ const PurpleDecorator = styled.div`
   width: 100%;
 
   & > p {
-    color: #c697dd;
-    font-size: 24px;
+    text-shadow: 2px 0 #c697dd, -2px 0 #c697dd, 0 2px #c697dd, 0 -2px #c697dd,
+               1px 1px #c697dd, -1px -1px #c697dd, 1px -1px #c697dd, -1px 1px #c697dd;
+    color: #ffffff;
+    font-size: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
     font-weight: bold;
+    margin-top: -12px;
+
+    @media (orientation: portrait) {
+      font-size: calc((100vw - 16px) / 11 - 8px);
+    }
   }
 `
 
 const RewardContainer = styled.div`
-  height: 50%;
+  height: 65%;
   left: 25%;
   position: absolute;
-  top: 90%;
-  width: 50%;
+  top: 85%;
+  width: 65%;
 
   & > div > p {
     font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
@@ -150,11 +158,11 @@ const RewardContainer = styled.div`
 `
 
 const PointsContainer = styled.div`
-  bottom: 90%;
-  height: 50%;
+  bottom: 85%;
+  height: 65%;
   left: 25%;
   position: absolute;
-  width: 50%;
+  width: 65%;
 
   & > div > p {
     font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);

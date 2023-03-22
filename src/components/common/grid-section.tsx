@@ -155,8 +155,8 @@ const RewardContainer = styled.div`
   }
 
   & > div {
-    height: 50%;
-    width: 50%;
+    height: 65%;
+    width: 65%;
 
     & > p {
       font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 3);
