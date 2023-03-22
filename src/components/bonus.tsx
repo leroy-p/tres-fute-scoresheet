@@ -10,10 +10,11 @@ import { rounds } from '../types/section-defaults'
 interface IProps {
   data: ReturnType<typeof useBonus>
   score: number
+  isDisabled?: boolean
   setIsMenuOpen: (value: boolean) => void
 }
 
-function Bonus({ data, score, setIsMenuOpen }: IProps) {
+function Bonus({ data, score, isDisabled, setIsMenuOpen }: IProps) {
   const {
     plusOneItems,
     rerollItems,
@@ -26,7 +27,7 @@ function Bonus({ data, score, setIsMenuOpen }: IProps) {
   } = data
 
   return (
-    <Container>
+    <Container isDisabled={isDisabled}>
       <Rounds
         addPlusOne={addPlusOne}
         addReroll={addReroll}
@@ -52,7 +53,7 @@ function Bonus({ data, score, setIsMenuOpen }: IProps) {
 
 export default Bonus
 
-const Container = styled.div`
+const Container = styled.div<{ isDisabled?: boolean }>`
   align-items: center;
   border: solid 2px black;
   border-radius: 12px;
@@ -61,7 +62,9 @@ const Container = styled.div`
   height: calc(100% / 3 - 8px);
   justify-content: center;
   gap: 16px;
+  opacity: ${({ isDisabled }) => isDisabled ? '0.3' : '1'};
   padding: 8px;
+  pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
   position: relative;
   width: calc(100% - 16px);
 `

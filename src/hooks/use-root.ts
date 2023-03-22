@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { SectionColor } from '../types/types'
+import { IReward, SectionColor } from '../types/types'
 import { useBonus } from './use-bonus'
 import { useGameHistory } from './use-history'
 
@@ -12,15 +12,54 @@ export function useRoot() {
   const orangeData = useSection(SectionColor.ORANGE)
   const purpleData = useSection(SectionColor.PURPLE)
   const bonusData = useBonus()
+  const {
+    addHistoryItem,
+    removeLastHistoryItem,
+    lastHistoryItem,
+    resetHistory,
+  } = useGameHistory()
 
   const [isDicePickerVisible, setDicePickerVisible] = useState<boolean>(false)
   const [minimumDiceSelectable, setMinimumDiceSelectable] = useState<number>(0)
   const [origin, setOrigin] = useState<SectionColor | null>(null)
+  const [highlightedSection, setHighlightedSection] =
+    useState<SectionColor | null>(null)
   const [totalScore, setTotalScore] = useState<number>(0)
   const [rerollCount, setRerollCount] = useState<number>(0)
   const [plusOneCount, setPlusOneCount] = useState<number>(0)
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-  const{ addHistoryItem, removeLastHistoryItem, lastHistoryItem, resetHistory } = useGameHistory()
+  const [diceRewards, setDiceRewards] = useState<IReward[]>([])
+
+  useEffect(() => {
+    let rewards = [...diceRewards]
+    let color: SectionColor | null = null
+    let newRewards: IReward[] = []
+    let updateRewards = rewards.length > 0
+
+    if (rewards[0]) {
+      if (rewards[0].color === SectionColor.YELLOW) {
+        color = SectionColor.YELLOW
+        updateRewards = false
+      } else if (rewards[0].color === SectionColor.BLUE) {
+        color = SectionColor.BLUE
+        updateRewards = false
+      } else if (rewards[0].color === SectionColor.GREEN) {
+        newRewards = greenData.checkRowBox()
+        addHistoryItem({ color: SectionColor.GREEN })
+      } else if (rewards[0].color === SectionColor.ORANGE && rewards[0].value) {
+        newRewards = orangeData.addRowBox(rewards[0].value)
+        addHistoryItem({ color: SectionColor.ORANGE, value: rewards[0].value })
+      } else if (rewards[0].color === SectionColor.PURPLE && rewards[0].value) {
+        newRewards = purpleData.addRowBox(rewards[0].value)
+        addHistoryItem({ color: SectionColor.PURPLE, value: rewards[0].value })
+      }
+
+      rewards.splice(0, 1)
+    }
+
+    setDiceRewards(updateRewards ? [...newRewards, ...rewards] : diceRewards)
+    setHighlightedSection(color)
+  }, [diceRewards, yellowData, blueData, greenData, orangeData, purpleData])
 
   useEffect(() => {
     const foxCount =
@@ -68,15 +107,15 @@ export function useRoot() {
       orangeData.rerollCount +
       purpleData.rerollCount
 
-      if (rerolls > rerollCount) {
-        for (let i = rerollCount; i < rerolls; i++) {
-          bonusData.addReroll()
-        }
-      } else if (rerolls < rerollCount) {
-        bonusData.removeLastReroll()
+    if (rerolls > rerollCount) {
+      for (let i = rerollCount; i < rerolls; i++) {
+        bonusData.addReroll()
       }
+    } else if (rerolls < rerollCount) {
+      bonusData.removeLastReroll()
+    }
 
-      setRerollCount(rerolls)
+    setRerollCount(rerolls)
   }, [
     yellowData.rerollCount,
     blueData.rerollCount,
@@ -95,15 +134,15 @@ export function useRoot() {
       orangeData.plusOneCount +
       purpleData.plusOneCount
 
-      if (plusOnes > plusOneCount) {
-        for (let i = plusOneCount; i < plusOnes; i++) {
-          bonusData.addPlusOne()
-        }
-      } else if (plusOnes < plusOneCount) {
-        bonusData.removeLastPlusOne()
+    if (plusOnes > plusOneCount) {
+      for (let i = plusOneCount; i < plusOnes; i++) {
+        bonusData.addPlusOne()
       }
+    } else if (plusOnes < plusOneCount) {
+      bonusData.removeLastPlusOne()
+    }
 
-      setPlusOneCount(plusOnes)
+    setPlusOneCount(plusOnes)
   }, [
     yellowData.plusOneCount,
     blueData.plusOneCount,
@@ -114,22 +153,8 @@ export function useRoot() {
     plusOneCount,
   ])
 
-
   function resetDicePicker() {
     setDicePickerVisible(false)
-    setOrigin(null)
-  }
-
-  function validateDicePicker(value: number) {
-    setDicePickerVisible(false)
-
-    if (origin === SectionColor.ORANGE) {
-      orangeData.addRowBox(value)
-    } else if (origin === SectionColor.PURPLE) {
-      purpleData.addRowBox(value)
-    }
-
-    addHistoryItem({ color: origin || undefined, value })
     setOrigin(null)
   }
 
@@ -151,27 +176,59 @@ export function useRoot() {
     setDicePickerVisible(isVisible)
   }
 
+  function validateDicePicker(value: number) {
+    let rewards: IReward[] = []
+
+    setDicePickerVisible(false)
+
+    if (origin === SectionColor.ORANGE) {
+      rewards = orangeData.addRowBox(value)
+    } else if (origin === SectionColor.PURPLE) {
+      rewards = purpleData.addRowBox(value)
+    }
+
+    addHistoryItem({ color: origin || undefined, value })
+    setOrigin(null)
+    setDiceRewards([...rewards])
+  }
+
   function addRowDice(origin: SectionColor, index: number) {
+    let rewards: IReward[] = []
+    const exisingRewards = [...diceRewards]
+
     if (origin === SectionColor.YELLOW) {
-      yellowData.checkGridBox(index)
+      rewards = yellowData.checkGridBox(index)
     } else if (origin === SectionColor.BLUE) {
-      blueData.checkGridBox(index)
+      rewards = blueData.checkGridBox(index)
+    }
+
+    if (exisingRewards.length > 0 && highlightedSection === origin) {
+      exisingRewards.splice(0, 1)
     }
 
     addHistoryItem({ color: origin, index })
+    setHighlightedSection(highlightedSection === origin ? null : highlightedSection)
+    setDiceRewards([...rewards, ...exisingRewards])
   }
 
   function addGreenDice() {
-    greenData.checkRowBox()
+    const rewards = greenData.checkRowBox()
     addHistoryItem({ color: SectionColor.GREEN })
+    setDiceRewards([...rewards])
   }
 
   function undo() {
     if (!lastHistoryItem) return
 
-    if (lastHistoryItem.color === SectionColor.YELLOW && lastHistoryItem.index !== undefined) {
+    if (
+      lastHistoryItem.color === SectionColor.YELLOW &&
+      lastHistoryItem.index !== undefined
+    ) {
       yellowData.unfillGridRowBox(lastHistoryItem.index)
-    } else if (lastHistoryItem.color === SectionColor.BLUE && lastHistoryItem.index !== undefined) {
+    } else if (
+      lastHistoryItem.color === SectionColor.BLUE &&
+      lastHistoryItem.index !== undefined
+    ) {
       blueData.unfillGridRowBox(lastHistoryItem.index)
     } else if (lastHistoryItem.color === SectionColor.GREEN) {
       greenData.unfillLastRowBox()
@@ -183,7 +240,6 @@ export function useRoot() {
 
     removeLastHistoryItem()
   }
-
 
   function reset() {
     yellowData.reset()
@@ -211,6 +267,7 @@ export function useRoot() {
     purpleData,
     bonusData,
     origin,
+    highlightedSection,
     totalScore,
     isMenuOpen,
     resetDicePicker,

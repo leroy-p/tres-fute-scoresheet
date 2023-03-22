@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BoxType, IBox, SectionColor } from '../../types/types'
+import { IBox, SectionColor } from '../../types/types'
 import Points from './points'
 import Reward from './reward'
 
@@ -10,15 +10,19 @@ interface IProps {
   color: SectionColor
   isPurple?: boolean
   index: number
+  isDisabled?: boolean
   clickEvent?: () => void
 }
 
-function Box({ color, box, isPurple, index, clickEvent }: IProps) {
+function Box({ color, box, isPurple, index, isDisabled, clickEvent }: IProps) {
+  const isEmpty = color === SectionColor.YELLOW || color === SectionColor.BLUE  || color === SectionColor.GREEN ? !box.isChecked : !box.value
+
   return (
     <Container
-      isEmpty={box.type === BoxType.EMPTY}
-      onClick={clickEvent}
+      isDisabled={isDisabled}
+      isEmpty={isEmpty}
       isPointer={clickEvent !== undefined && !box.isChecked}
+      onClick={clickEvent}
     >
       {box.multiplier > 1 && (
         <MultiplierText isHidden={box.value > 0}>
@@ -55,20 +59,19 @@ function Box({ color, box, isPurple, index, clickEvent }: IProps) {
 
 export default Box
 
-const Container = styled.div<{ isEmpty: boolean; isPointer: boolean }>`
+const Container = styled.div<{ isEmpty: boolean; isPointer: boolean; isDisabled?: boolean  }>`
   align-items: center;
   background-color: #ffffff;
   border-radius: 4px;
   color: black;
-  cursor: ${({ isPointer }) => (isPointer ? 'pointer' : 'auto')};
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 2);
   height: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
   justify-content: center;
-  opacity: ${({ isEmpty }) => (isEmpty ? '0' : '1')};
-  pointer-events: ${({ isEmpty }) => (isEmpty ? 'none' : 'auto')};
+  pointer-events: ${({ isEmpty, isDisabled }) => (isDisabled || !isEmpty ? 'none' : 'auto')};
   position: relative;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
 
@@ -129,7 +132,7 @@ const PurpleDecorator = styled.div`
 
   & > p {
     text-shadow: 2px 0 #c697dd, -2px 0 #c697dd, 0 2px #c697dd, 0 -2px #c697dd,
-               1px 1px #c697dd, -1px -1px #c697dd, 1px -1px #c697dd, -1px 1px #c697dd;
+      1px 1px #c697dd, -1px -1px #c697dd, 1px -1px #c697dd, -1px 1px #c697dd;
     color: #ffffff;
     font-size: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
     font-weight: bold;

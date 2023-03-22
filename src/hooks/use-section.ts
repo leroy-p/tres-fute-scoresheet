@@ -5,7 +5,13 @@ import {
   yellowRewards,
 } from '../types/section-defaults'
 import { blueScores, greenScores } from '../types/section-scores'
-import { BoxType, IBox, RewardType, SectionColor } from '../types/types'
+import {
+  BoxType,
+  IBox,
+  IReward,
+  RewardType,
+  SectionColor,
+} from '../types/types'
 import {
   BLUE_ROW_COUNT,
   COLUMN_COUNT,
@@ -23,10 +29,11 @@ export function useSection(color: SectionColor) {
   const [plusOneCount, setPlusOneCount] = useState<number>(0)
   const [foxCount, setFoxCount] = useState<number>(0)
 
-  function checkGridBox(index: number) {
-    if (color !== SectionColor.YELLOW && color !== SectionColor.BLUE) return
-    if (index < 0 && index >= boxes.length) return
+  function checkGridBox(index: number): IReward[] {
+    if (color !== SectionColor.YELLOW && color !== SectionColor.BLUE) return []
+    if (index < 0 && index >= boxes.length) return []
 
+    let diceRewards: IReward[] = []
     const boxesClone = [...boxes]
     const emptyIndex = boxesClone.findIndex((b) => !b.isChecked)
     let score = 0
@@ -41,19 +48,21 @@ export function useSection(color: SectionColor) {
       const checkedCount = boxesClone.filter(
         (b) => b.isChecked && b.type !== BoxType.EMPTY
       ).length
-      const blueRewards = getBlueRewards()
+      const blueRewards = getBlueRewards(index)
 
       score = blueScores[checkedCount - 1]
       rerolls = blueRewards.rerollCount
       plusOnes = blueRewards.plusOneCount
       foxes = blueRewards.foxCount
+      diceRewards = [...blueRewards.diceRewards]
     } else {
-      const yellowRewards = getYellowScoreAndRewards()
+      const yellowRewards = getYellowScoreAndRewards(index)
 
       score = yellowRewards.score
       rerolls = yellowRewards.rerollCount
       plusOnes = yellowRewards.plusOneCount
       foxes = yellowRewards.foxCount
+      diceRewards = [...yellowRewards.diceRewards]
     }
 
     setScore(score)
@@ -62,10 +71,12 @@ export function useSection(color: SectionColor) {
     setFoxCount(foxes)
     setIsFull(emptyIndex === -1)
     setBoxes(boxesClone)
+
+    return diceRewards
   }
 
-  function checkRowBox() {
-    if (color !== SectionColor.GREEN) return
+  function checkRowBox(): IReward[] {
+    if (color !== SectionColor.GREEN) return []
 
     const boxesClone = [...boxes]
     const emptyIndex = boxesClone.findIndex((b) => !b.isChecked)
@@ -104,11 +115,17 @@ export function useSection(color: SectionColor) {
     setRerollCount(rerolls)
     setPlusOneCount(plusOnes)
     setFoxCount(foxes)
+
+    return emptyIndex !== -1 &&
+      boxesClone[emptyIndex].reward?.type === RewardType.DICE
+      ? ([boxesClone[emptyIndex].reward] as IReward[])
+      : []
   }
 
-  function addRowBox(dice: number) {
-    if (color !== SectionColor.PURPLE && color !== SectionColor.ORANGE) return
-    if (dice < 1 || dice > 6) return
+  function addRowBox(dice: number): IReward[] {
+    if (color !== SectionColor.PURPLE && color !== SectionColor.ORANGE)
+      return []
+    if (dice < 1 || dice > 6) return []
 
     const boxesClone = [...boxes]
     const emptyIndex = boxesClone.findIndex((b) => b.value === 0)
@@ -147,6 +164,11 @@ export function useSection(color: SectionColor) {
     setRerollCount(rerolls)
     setPlusOneCount(plusOnes)
     setFoxCount(foxes)
+
+    return emptyIndex !== -1 &&
+      boxesClone[emptyIndex].reward?.type === RewardType.DICE
+      ? ([boxesClone[emptyIndex].reward] as IReward[])
+      : []
   }
 
   function getLastDice(): number {
@@ -156,16 +178,18 @@ export function useSection(color: SectionColor) {
     return lastFilledBox?.value || 0
   }
 
-  function getYellowScoreAndRewards(): {
+  function getYellowScoreAndRewards(lastChechedIndex?: number): {
     score: number
     rerollCount: number
     plusOneCount: number
     foxCount: number
+    diceRewards: IReward[]
   } {
     let score = 0
     let rerolls = 0
     let plusOnes = 0
     let foxes = 0
+    let diceRewards: IReward[] = []
 
     for (let i = 0; i < YELLOW_ROW_COUNT; i++) {
       if (isRowCompleted(boxes, i)) {
@@ -177,6 +201,15 @@ export function useSection(color: SectionColor) {
           plusOnes += 1
         } else if (yellowRewards.rows[i]?.reward?.type === RewardType.FOX) {
           foxes += 1
+        }
+
+        if (
+          lastChechedIndex !== undefined &&
+          Math.floor(lastChechedIndex / COLUMN_COUNT) === i &&
+          yellowRewards.rows[i].reward &&
+          yellowRewards.rows[i].reward?.type === RewardType.DICE
+        ) {
+          diceRewards.push(yellowRewards.rows[i].reward as IReward)
         }
       }
     }
@@ -202,17 +235,20 @@ export function useSection(color: SectionColor) {
       rerollCount: rerolls,
       plusOneCount: plusOnes,
       foxCount: foxes,
+      diceRewards,
     }
   }
 
-  function getBlueRewards(): {
+  function getBlueRewards(lastChechedIndex?: number): {
     rerollCount: number
     plusOneCount: number
     foxCount: number
+    diceRewards: IReward[]
   } {
     let rerolls = 0
     let plusOnes = 0
     let foxes = 0
+    let diceRewards: IReward[] = []
 
     for (let i = 0; i < BLUE_ROW_COUNT; i++) {
       if (isRowCompleted(boxes, i)) {
@@ -222,6 +258,15 @@ export function useSection(color: SectionColor) {
           plusOnes += 1
         } else if (blueRewards.rows[i]?.reward?.type === RewardType.FOX) {
           foxes += 1
+        }
+
+        if (
+          lastChechedIndex !== undefined &&
+          Math.floor(lastChechedIndex / COLUMN_COUNT) === i &&
+          blueRewards.rows[i].reward &&
+          blueRewards.rows[i].reward?.type === RewardType.DICE
+        ) {
+          diceRewards.push(blueRewards.rows[i].reward as IReward)
         }
       }
     }
@@ -237,10 +282,24 @@ export function useSection(color: SectionColor) {
         } else if (blueRewards.columns[i]?.reward?.type === RewardType.FOX) {
           foxes += 1
         }
+
+        if (
+          lastChechedIndex !== undefined &&
+          lastChechedIndex % COLUMN_COUNT === i &&
+          blueRewards.columns[i].reward &&
+          blueRewards.columns[i].reward?.type === RewardType.DICE
+        ) {
+          diceRewards.push(blueRewards.columns[i].reward as IReward)
+        }
       }
     }
 
-    return { rerollCount: rerolls, plusOneCount: plusOnes, foxCount: foxes }
+    return {
+      rerollCount: rerolls,
+      plusOneCount: plusOnes,
+      foxCount: foxes,
+      diceRewards,
+    }
   }
 
   function unfillGridRowBox(index: number) {

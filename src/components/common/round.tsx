@@ -29,13 +29,12 @@ const Container = styled.div<{ isChecked: boolean }>`
   align-items: center;
   border: solid 2px #ffffff;
   border-radius: 12px;
-  cursor: ${({ isChecked }) => (isChecked ? 'auto' : 'pointer')};
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 8px;
   padding: 8px;
-  pointer-events: ${({ isChecked }) => (isChecked ? 'none' : 'auto')};
 `
 
 const BoxContainer = styled.div`

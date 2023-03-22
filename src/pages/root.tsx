@@ -23,6 +23,7 @@ function Root() {
     bonusData,
     totalScore,
     isMenuOpen,
+    highlightedSection,
     resetDicePicker,
     validateDicePicker,
     openDicePicker,
@@ -37,29 +38,53 @@ function Root() {
     <Container>
       <Bonus
         data={bonusData}
+        isDisabled={highlightedSection !== null}
         score={totalScore}
         setIsMenuOpen={setIsMenuOpen}
       />
       <Section
         data={yellowData}
         clickEvent={(index) => addRowDice(SectionColor.YELLOW, index)}
+        isDisabled={
+          highlightedSection !== null &&
+          highlightedSection !== SectionColor.YELLOW
+        }
         rewards={yellowRewards}
       />
       <Section
         data={blueData}
         clickEvent={(index) => addRowDice(SectionColor.BLUE, index)}
+        isDisabled={
+          highlightedSection !== null &&
+          highlightedSection !== SectionColor.BLUE
+        }
         rewards={blueRewards}
         points={blueScores}
       />
-      <Section data={greenData} clickEvent={addGreenDice} />
+      <Section
+        data={greenData}
+        clickEvent={addGreenDice}
+        isDisabled={
+          highlightedSection !== null &&
+          highlightedSection !== SectionColor.GREEN
+        }
+      />
       <Section
         data={orangeData}
         clickEvent={() => openDicePicker(SectionColor.ORANGE)}
+        isDisabled={
+          highlightedSection !== null &&
+          highlightedSection !== SectionColor.ORANGE
+        }
       />
       <Section
         isPurple
         data={purpleData}
         clickEvent={() => openDicePicker(SectionColor.PURPLE)}
+        isDisabled={
+          highlightedSection !== null &&
+          highlightedSection !== SectionColor.PURPLE
+        }
       />
       {isDicePickerVisible && (
         <DicePicker
@@ -68,7 +93,9 @@ function Root() {
           minimumDice={minimumDiceSelectable}
         />
       )}
-      {isMenuOpen && <Menu close={() => setIsMenuOpen(false)} reset={reset} undo={undo} />}
+      {isMenuOpen && (
+        <Menu close={() => setIsMenuOpen(false)} reset={reset} undo={undo} />
+      )}
     </Container>
   )
 }

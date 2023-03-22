@@ -6,14 +6,15 @@ import ScoreDisplayer from './score-displayer'
 interface IProps {
   color: SectionColor
   children: JSX.Element
-  clickEvent: () => void
   isPointer: boolean
   score: number
+  isDisabled?: boolean
+  clickEvent: () => void
 }
 
-function RowSection({ color, children, clickEvent, isPointer, score }: IProps) {
+function RowSection({ color, children, isPointer, score, isDisabled, clickEvent }: IProps) {
   return (
-    <Container color={color} isPointer={isPointer} onClick={clickEvent}>
+    <Container color={color} isDisabled={isDisabled} isPointer={isPointer} onClick={clickEvent}>
       {children}
       <ScoreDisplayer score={score} />
     </Container>
@@ -22,7 +23,7 @@ function RowSection({ color, children, clickEvent, isPointer, score }: IProps) {
 
 export default RowSection
 
-const Container = styled.div<{ isPointer: boolean; color: SectionColor }>`
+const Container = styled.div<{ isDisabled?: boolean; isPointer: boolean; color: SectionColor }>`
   align-items: center;
   border: ${({ color }) => {
     if (color === SectionColor.YELLOW) return 'solid 2px #ffefa1'
@@ -40,7 +41,9 @@ const Container = styled.div<{ isPointer: boolean; color: SectionColor }>`
   flex-direction: row;
   height: calc(100% / 9 - 8px);
   justify-content: space-between;
+  opacity: ${({ isDisabled }) => isDisabled ? '0.3' : '1'};
   padding: 8px;
+  pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
   position: relative;
   width: calc(100% - 16px);
 `

@@ -12,6 +12,7 @@ interface IProps {
   rewards?: ISectionRewards
   score: number
   points?: number[]
+  isDisabled?: boolean
   clickEvent?: () => void
 }
 
@@ -21,10 +22,11 @@ function GridSection({
   rewards,
   score,
   points,
+  isDisabled,
   clickEvent,
 }: IProps) {
   return (
-    <Container color={color} onClick={clickEvent}>
+    <Container color={color} isDisabled={isDisabled} onClick={clickEvent}>
       <MainContainer>
         {points && <SectionScoresTable points={points} color={color} />}
         <TopContainer>
@@ -66,7 +68,7 @@ function GridSection({
 
 export default GridSection
 
-const Container = styled.div<{ color: SectionColor }>`
+const Container = styled.div<{ isDisabled?: boolean; color: SectionColor }>`
   align-items: center;
   border: ${({ color }) => {
     if (color === SectionColor.YELLOW) return 'solid 2px #ffefa1'
@@ -83,6 +85,8 @@ const Container = styled.div<{ color: SectionColor }>`
   flex-direction: column;
   height: calc(100% / 3 - 8px);
   justify-content: center;
+  opacity: ${({ isDisabled }) => isDisabled ? '0.3' : '1'};
+  pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
   position: relative;
   width: calc(50% - 12px);
 `
