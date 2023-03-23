@@ -27,8 +27,9 @@ export function useRoot() {
   const [totalScore, setTotalScore] = useState<number>(0)
   const [rerollCount, setRerollCount] = useState<number>(0)
   const [plusOneCount, setPlusOneCount] = useState<number>(0)
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [diceRewards, setDiceRewards] = useState<IReward[]>([])
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false)
 
   useEffect(() => {
     let rewards = [...diceRewards]
@@ -59,7 +60,15 @@ export function useRoot() {
 
     setDiceRewards(updateRewards ? [...newRewards, ...rewards] : diceRewards)
     setHighlightedSection(color)
-  }, [diceRewards, yellowData, blueData, greenData, orangeData, purpleData])
+  }, [
+    diceRewards,
+    yellowData,
+    blueData,
+    greenData,
+    orangeData,
+    purpleData,
+    addHistoryItem,
+  ])
 
   useEffect(() => {
     const foxCount =
@@ -207,7 +216,9 @@ export function useRoot() {
     }
 
     addHistoryItem({ color: origin, index })
-    setHighlightedSection(highlightedSection === origin ? null : highlightedSection)
+    setHighlightedSection(
+      highlightedSection === origin ? null : highlightedSection
+    )
     setDiceRewards([...rewards, ...exisingRewards])
   }
 
@@ -270,13 +281,21 @@ export function useRoot() {
     highlightedSection,
     totalScore,
     isMenuOpen,
+    isScoreOpen,
     resetDicePicker,
     validateDicePicker,
     openDicePicker,
     addRowDice,
     addGreenDice,
     setIsMenuOpen,
+    setIsScoreOpen,
     undo,
     reset,
+    foxCount:
+      yellowData.foxCount +
+      blueData.foxCount +
+      greenData.foxCount +
+      orangeData.foxCount +
+      purpleData.foxCount,
   }
 }

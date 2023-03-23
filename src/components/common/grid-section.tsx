@@ -3,14 +3,12 @@ import styled from 'styled-components'
 import { ISectionRewards, SectionColor } from '../../types/types'
 import Points from './points'
 import Reward from './reward'
-import ScoreDisplayer from './score-displayer'
 import SectionScoresTable from './section-scores-table'
 
 interface IProps {
   color: SectionColor
   children: JSX.Element
   rewards?: ISectionRewards
-  score: number
   points?: number[]
   isDisabled?: boolean
   clickEvent?: () => void
@@ -20,7 +18,6 @@ function GridSection({
   color,
   children,
   rewards,
-  score,
   points,
   isDisabled,
   clickEvent,
@@ -61,7 +58,6 @@ function GridSection({
           </RewardContainer>
         </BottomContainer>
       </MainContainer>
-      <ScoreDisplayer score={score} />
     </Container>
   )
 }

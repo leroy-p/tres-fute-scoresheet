@@ -1,20 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useBonus } from '../hooks/use-bonus'
-import { RewardType } from '../types/types'
-import ItemsRow from './bonus/items-row'
-import Rounds from './common/rounds'
+import { useBonus } from '../../hooks/use-bonus'
+import { RewardType } from '../../types/types'
+import ItemsRow from './items-row'
+import Rounds from '../common/rounds'
 
-import { rounds } from '../types/section-defaults'
+import { rounds } from '../../types/section-defaults'
 
 interface IProps {
   data: ReturnType<typeof useBonus>
-  score: number
   isDisabled?: boolean
   setIsMenuOpen: (value: boolean) => void
 }
 
-function Bonus({ data, score, isDisabled, setIsMenuOpen }: IProps) {
+function Bonus({ data, isDisabled, setIsMenuOpen }: IProps) {
   const {
     plusOneItems,
     rerollItems,
@@ -46,7 +45,6 @@ function Bonus({ data, score, isDisabled, setIsMenuOpen }: IProps) {
         type={RewardType.PLUS_ONE}
         useAction={usePlusOne}
       />
-      <ScoreDisplayer>Total score: {score}</ScoreDisplayer>
     </Container>
   )
 }
@@ -67,11 +65,4 @@ const Container = styled.div<{ isDisabled?: boolean }>`
   pointer-events: ${({ isDisabled }) => isDisabled ? 'none' : 'auto'};
   position: relative;
   width: calc(100% - 16px);
-`
-
-const ScoreDisplayer = styled.p`
-  bottom: 2px;
-  font-size: 12px;
-  position: absolute;
-  right: 2px;
 `

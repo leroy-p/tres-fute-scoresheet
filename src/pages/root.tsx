@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import Div100vh from 'react-div-100vh'
 
 import { useRoot } from '../hooks/use-root'
-import Bonus from '../components/bonus'
+import Bonus from '../components/bonus/bonus'
 import DicePicker from '../components/common/dice-picker'
 import { SectionColor } from '../types/types'
 import Section from '../components/common/section'
 import { blueRewards, yellowRewards } from '../types/section-defaults'
 import { blueScores } from '../types/section-scores'
 import Menu from '../components/menu'
+import Score from '../components/common/score'
 
 function Root() {
   const {
@@ -23,13 +24,16 @@ function Root() {
     bonusData,
     totalScore,
     isMenuOpen,
+    isScoreOpen,
     highlightedSection,
+    foxCount,
     resetDicePicker,
     validateDicePicker,
     openDicePicker,
     addRowDice,
     addGreenDice,
     setIsMenuOpen,
+    setIsScoreOpen,
     undo,
     reset,
   } = useRoot()
@@ -39,7 +43,6 @@ function Root() {
       <Bonus
         data={bonusData}
         isDisabled={highlightedSection !== null}
-        score={totalScore}
         setIsMenuOpen={setIsMenuOpen}
       />
       <Section
@@ -94,7 +97,24 @@ function Root() {
         />
       )}
       {isMenuOpen && (
-        <Menu close={() => setIsMenuOpen(false)} reset={reset} undo={undo} />
+        <Menu
+          close={() => setIsMenuOpen(false)}
+          reset={reset}
+          showScore={() => setIsScoreOpen(true)}
+          undo={undo}
+        />
+      )}
+      {isScoreOpen && (
+        <Score
+          close={() => setIsScoreOpen(false)}
+          blueScore={blueData.score}
+          greenScore={greenData.score}
+          orangeScore={orangeData.score}
+          purpleScore={purpleData.score}
+          totalScore={totalScore}
+          yellowScore={yellowData.score}
+          foxCount={foxCount}
+        />
       )}
     </Container>
   )

@@ -31,7 +31,6 @@ function Section({
         isDisabled={isDisabled}
         points={points}
         rewards={rewards}
-        score={data.score}
       >
         <>
           {boxes.map((box, index) => (
@@ -59,7 +58,6 @@ function Section({
       <RowSection
         color={data.color}
         isDisabled={isDisabled}
-        score={data.score}
         clickEvent={() => clickEvent(0)}
         isPointer={!data.isFull}
       >

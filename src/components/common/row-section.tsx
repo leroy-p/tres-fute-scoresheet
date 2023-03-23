@@ -1,22 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SectionColor } from '../../types/types'
-import ScoreDisplayer from './score-displayer'
 
 interface IProps {
   color: SectionColor
   children: JSX.Element
   isPointer: boolean
-  score: number
   isDisabled?: boolean
   clickEvent: () => void
 }
 
-function RowSection({ color, children, isPointer, score, isDisabled, clickEvent }: IProps) {
+function RowSection({ color, children, isPointer, isDisabled, clickEvent }: IProps) {
   return (
     <Container color={color} isDisabled={isDisabled} isPointer={isPointer} onClick={clickEvent}>
       {children}
-      <ScoreDisplayer score={score} />
     </Container>
   )
 }

@@ -5,9 +5,10 @@ interface IProps {
   close: () => void
   reset: () => void
   undo: () => void
+  showScore: () => void
 }
 
-function Menu({ close, reset, undo }: IProps) {
+function Menu({ close, reset, undo, showScore }: IProps) {
   function onReset() {
     reset()
     close()
@@ -18,12 +19,18 @@ function Menu({ close, reset, undo }: IProps) {
     close()
   }
 
+  function onShowScore() {
+    close()
+    showScore()
+  }
+
   return (
     <Container onClick={close}>
       <div onClick={(event) => event.stopPropagation()}>
         <h6>Menu</h6>
         <Button onClick={onUndo}>Undo</Button>
         <Button onClick={onReset}>Reset</Button>
+        <Button onClick={onShowScore}>Score</Button>
         <a href="/dices" target="_blank">
           <Button onClick={close}>Dices</Button>
         </a>
@@ -61,7 +68,7 @@ const Container = styled.div<{ isLoading?: boolean }>`
 
     & > h6 {
       color: #ffffff;
-      font-size: 24px;
+      font-size: 32px;
       font-weight: bold;
       margin: 0 0 48px 0;
     }
@@ -75,11 +82,13 @@ const Container = styled.div<{ isLoading?: boolean }>`
 const Button = styled.button`
   background-color: #222222;
   color: #ffffff;
+  font-size: 24px;
   height: 64px;
   width: 100%;
 
   & > a {
     color: #ffffff;
+    font-size: 24px;
     text-decoration: none;
   }
 
