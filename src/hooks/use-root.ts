@@ -4,6 +4,7 @@ import { useBonus } from './use-bonus'
 import { useGameHistory } from './use-history'
 
 import { useSection } from './use-section'
+import { isGridCompleted } from '../utils/grid'
 
 export function useRoot() {
   const yellowData = useSection(SectionColor.YELLOW)
@@ -39,10 +40,10 @@ export function useRoot() {
 
     if (rewards[0]) {
       if (rewards[0].color === SectionColor.YELLOW) {
-        color = SectionColor.YELLOW
+        color = isGridCompleted(yellowData.boxes) ? null : SectionColor.YELLOW
         updateRewards = false
       } else if (rewards[0].color === SectionColor.BLUE) {
-        color = SectionColor.BLUE
+        color = isGridCompleted(blueData.boxes) ? null : SectionColor.BLUE
         updateRewards = false
       } else if (rewards[0].color === SectionColor.GREEN) {
         newRewards = greenData.checkRowBox()

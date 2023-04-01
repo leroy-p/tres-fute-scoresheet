@@ -400,7 +400,11 @@ export function useSection(color: SectionColor) {
     const boxes: IBox[] = []
 
     for (const box of boxesDefault[color]) {
-      boxes.push({ ...box, isChecked: box.isCheckedByDefault })
+      boxes.push({
+        ...box,
+        isChecked: box.isCheckedByDefault,
+        value: color === SectionColor.ORANGE || color === SectionColor.PURPLE ? 0 : box.value
+      })
     }
 
     setBoxes(boxes)

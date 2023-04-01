@@ -38,7 +38,7 @@ const blueBoxDefault: IBox = {
 }
 
 const blueDefault = [
-  { ...blueBoxDefault, type: BoxType.EMPTY, isChecked: true },
+  { ...blueBoxDefault, type: BoxType.EMPTY, isChecked: true, isCheckedByDefault: true },
   { ...blueBoxDefault, value: 2 },
   { ...blueBoxDefault, value: 3 },
   { ...blueBoxDefault, value: 4 },

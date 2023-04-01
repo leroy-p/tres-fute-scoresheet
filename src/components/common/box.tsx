@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { IBox, SectionColor } from '../../types/types'
+import { BoxType, IBox, SectionColor } from '../../types/types'
 import Points from './points'
 import Reward from './reward'
 
@@ -20,6 +20,7 @@ function Box({ color, box, isPurple, index, isDisabled, clickEvent }: IProps) {
   return (
     <Container
       isDisabled={isDisabled}
+      isDisplayed={box.type !== BoxType.EMPTY}
       isEmpty={isEmpty}
       isPointer={clickEvent !== undefined && !box.isChecked}
       onClick={clickEvent}
@@ -59,7 +60,7 @@ function Box({ color, box, isPurple, index, isDisabled, clickEvent }: IProps) {
 
 export default Box
 
-const Container = styled.div<{ isEmpty: boolean; isPointer: boolean; isDisabled?: boolean  }>`
+const Container = styled.div<{ isEmpty: boolean; isPointer: boolean; isDisabled?: boolean; isDisplayed?: boolean  }>`
   align-items: center;
   background-color: #ffffff;
   border-radius: 4px;
@@ -71,6 +72,7 @@ const Container = styled.div<{ isEmpty: boolean; isPointer: boolean; isDisabled?
   font-size: calc(((100vh * 9 / 16 - 16px) / 11 - 8px) / 2);
   height: calc((100vh * 9 / 16 - 16px) / 11 - 8px);
   justify-content: center;
+  opacity: ${({ isDisplayed }) => isDisplayed ? '1' : '0'};
   pointer-events: ${({ isEmpty, isDisabled }) => (isDisabled || !isEmpty ? 'none' : 'auto')};
   position: relative;
   width: calc((100vh * 9 / 16 - 16px) / 11 - 8px);

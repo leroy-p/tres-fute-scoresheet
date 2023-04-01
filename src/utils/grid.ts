@@ -41,3 +41,13 @@ export function isDiagonalCompleted(boxes: IBox[]): boolean {
 
   return true
 }
+
+export function isGridCompleted(boxes: IBox[]): boolean {
+  for (let i = 0; i < COLUMN_COUNT; i++) {
+    if (!isColumnCompleted(boxes, i)) {
+      return false
+    }
+  }
+
+  return true
+}
